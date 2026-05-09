@@ -9,7 +9,7 @@ interface SitemapPage {
 }
 
 export async function GET() {
-  const baseUrl = 'https://tu-dominio.com';
+  const baseUrl = 'https://carpinteriapro.com';
 
   const staticPages: SitemapPage[] = [
     { url: '/',                        priority: '1.0', changefreq: 'daily' },
