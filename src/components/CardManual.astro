@@ -1,0 +1,100 @@
+---
+// src/components/CardManual.astro
+import { CATEGORIAS } from '../data/manuales';
+import type { Manual } from '../data/manuales';
+
+interface Props {
+  manual: Manual;
+}
+
+const { manual } = Astro.props;
+const cat = CATEGORIAS[manual.categoria];
+
+const nivelColor: Record<string, string> = {
+  'Básico':     'text-green-400',
+  'Intermedio': 'text-yellow-400',
+  'Avanzado':   'text-red-400',
+};
+
+// Verifica si la imagen existe (no es placeholder)
+const tieneImagen = manual.imagen && 
+  !manual.imagen.includes('/img/manuales/') === false && 
+  manual.imagen.startsWith('/') || manual.imagen.startsWith('http');
+---
+
+<a href={`/manuales/${manual.slug}`} class="card-manual group block">
+  
+  <!-- Imagen -->
+  <div class="relative h-44 overflow-hidden bg-bark-800 rounded-t-xl">
+    
+    {manual.imagen ? (
+      <!-- ✅ Imagen real con fallback al emoji -->
+      <img 
+        src={manual.imagen} 
+        alt={`${manual.titulo} - Manual de carpintería`}
+        width="400"
+        height="176"
+        loading="lazy"
+        decoding="async"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+      <!-- Fallback si la imagen no carga -->
+      <div class="absolute inset-0 hidden items-center justify-center bg-bark-800">
+        <span class="text-7xl opacity-20">{cat.emoji}</span>
+      </div>
+    ) : (
+      <!-- Sin imagen → muestra emoji -->
+      <div class="absolute inset-0 flex items-center justify-center bg-bark-850">
+        <img
+          src="/image/logo.jpg"
+          alt="Manual PDF"
+          width="64"
+          height="64"
+          class="opacity-60 group-hover:opacity-80 transition-opacity w-16 h-16 object-contain"
+        />
+      </div>
+    )}
+
+    <!-- Overlay gradiente para que los badges se lean bien -->
+    <div class="absolute inset-0 bg-gradient-to-t from-bark-900/60 via-transparent to-transparent pointer-events-none" />
+
+    <!-- Badge categoría -->
+    <div class="absolute top-3 left-3">
+      <span class={`badge-category ${cat.color}`}>
+        {cat.emoji} {cat.label}
+      </span>
+    </div>
+
+    <!-- Badge destacado -->
+    {manual.destacado && (
+      <div class="absolute top-3 right-3">
+        <span class="badge-category bg-wood-600/80 text-wood-100">⭐ Destacado</span>
+      </div>
+    )}
+  </div>
+
+  <!-- Contenido -->
+  <div class="p-5">
+    <h3 class="font-display font-bold text-wood-100 text-lg leading-snug mb-2 group-hover:text-wood-300 transition-colors">
+      {manual.titulo}
+    </h3>
+    <p class="text-wood-400 text-sm leading-relaxed line-clamp-2 mb-4">
+      {manual.descripcion}
+    </p>
+
+    <div class="flex items-center justify-between text-xs">
+      <div class="flex items-center gap-3">
+        <span class={`font-bold ${nivelColor[manual.nivel]}`}>
+          {manual.nivel}
+        </span>
+        <span class="text-wood-500">·</span>
+        <span class="text-wood-500">⏱ {manual.duracion}</span>
+      </div>
+      <span class="text-wood-600">
+        {new Date(manual.fecha).toLocaleDateString('es-PE', { month: 'short', year: 'numeric' })}
+      </span>
+    </div>
+  </div>
+
+</a>

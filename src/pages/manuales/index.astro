@@ -1,0 +1,261 @@
+---
+// src/pages/manuales/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CardManual from '../../components/CardManual.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { MANUALES, CATEGORIAS } from '../../data/manuales';
+import type { Categoria } from '../../data/manuales';
+
+// Para SSG: siempre mostramos TODOS en el HTML
+// El filtro lo hace JS en el cliente
+const categorias = Object.entries(CATEGORIAS) as [Categoria, typeof CATEGORIAS[Categoria]][];
+
+// Pasamos todos los manuales como JSON al cliente
+const manualesJSON = JSON.stringify(MANUALES);
+---
+
+<BaseLayout
+  title="Todos los Manuales de Carpintería – CarpinteríaPro"
+  description="Todos los manuales de carpintería: melamina, madera, MDF, bambú y herramientas."
+>
+
+  <!-- Breadcrumb -->
+  <div class="border-b border-wood-800/20 bg-bark-950/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <nav class="flex items-center gap-2 text-xs text-wood-500">
+        <a href="/" class="hover:text-wood-300 transition-colors">Inicio</a>
+        <span>/</span>
+        <span class="text-wood-300">Manuales</span>
+      </nav>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex flex-col lg:flex-row gap-10">
+
+      <!-- ─── CONTENIDO PRINCIPAL ─── -->
+      <div class="flex-1 min-w-0">
+
+        <!-- Header dinámico (lo actualiza JS) -->
+        <div class="mb-8">
+          <h1 id="page-title" class="font-display text-4xl font-bold text-wood-100 mb-3 flex items-center gap-3">
+            <span>📚</span> Todos los Manuales
+          </h1>
+          <p id="page-count" class="text-wood-400">
+            {MANUALES.length} manuales disponibles
+          </p>
+        </div>
+
+        <!-- Filtros rápidos (tabs) -->
+        <div class="flex flex-wrap gap-2 mb-8">
+          <a
+            href="/manuales"
+            data-cat=""
+            class="filter-btn px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 border bg-wood-600 text-white border-wood-600"
+          >
+            Todos
+          </a>
+          {categorias.map(([key, cat]) => (
+            <a
+              href={`/manuales?cat=${key}`}
+              data-cat={key}
+              class="filter-btn px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 border flex items-center gap-2 bg-bark-900 text-wood-400 border-wood-800/30 hover:border-wood-600/50 hover:text-wood-200"
+            >
+              <span>{cat.emoji}</span> {cat.label}
+            </a>
+          ))}
+        </div>
+
+        <!-- Grid de manuales (renderizado por JS) -->
+        <div id="manuales-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          <!-- JS inserta las cards aquí -->
+        </div>
+
+        <!-- Estado vacío -->
+        <div id="empty-state" class="hidden text-center py-20 text-wood-500">
+          <p class="text-5xl mb-4">🔍</p>
+          <p class="text-xl">No hay manuales en esta categoría aún.</p>
+          <a href="/manuales" class="mt-4 inline-block text-wood-400 hover:text-wood-200 underline">Ver todos</a>
+        </div>
+
+        <!-- AdSense -->
+        <div class="mt-10 bg-bark-900/50 border border-wood-800/20 rounded-xl p-3 text-center">
+          <p class="text-wood-600 text-xs mb-2">PUBLICIDAD</p>
+          <div class="bg-bark-800 rounded-lg h-[90px] flex items-center justify-center">
+            <p class="text-wood-600 text-xs">Anuncio 728×90 (AdSense)</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ─── SIDEBAR ─── -->
+      <div class="w-full lg:w-72 flex-shrink-0">
+        <Sidebar />
+      </div>
+
+    </div>
+  </div>
+
+</BaseLayout>
+
+<!-- ✅ Datos de manuales y categorías para el JS -->
+<script define:vars={{ manualesJSON, CATEGORIAS }}>
+  const MANUALES = JSON.parse(manualesJSON);
+
+  // Lee el ?cat= de la URL en el browser
+  function getCatFromURL() {
+    return new URLSearchParams(window.location.search).get('cat') || '';
+  }
+
+  function renderCard(manual) {
+  const cat = CATEGORIAS[manual.categoria] || {};
+
+  const imagenHTML = manual.imagen
+    ? `<img
+        src="${manual.imagen}"
+        alt="${manual.titulo} - Manual de carpintería"
+        width="400"
+        height="176"
+        loading="lazy"
+        class="card-img relative z-10 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        onerror="this.style.display='none'"
+      />`
+    : '';
+
+  const nivelColor = {
+    'Básico': 'text-green-400',
+    'Intermedio': 'text-yellow-400',
+    'Avanzado': 'text-red-400',
+  }[manual.nivel] || 'text-wood-400';
+
+  const fecha = new Date(manual.fecha).toLocaleDateString('es-PE', {
+    month: 'short', year: 'numeric'
+  });
+
+  return `
+    <a href="/manuales/${manual.slug}" class="card-manual group block bg-bark-900 hover:bg-bark-800 border border-wood-800/30 hover:border-wood-600/40 rounded-xl overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-wood-900/50">
+      
+      <!-- Imagen -->
+      <div class="relative h-44 overflow-hidden bg-bark-800">
+        
+        <!-- Fallback emoji siempre detrás -->
+        <div class="absolute inset-0 flex items-center justify-center bg-bark-800">
+          <span class="text-7xl opacity-20">${cat.emoji || '📄'}</span>
+        </div>
+
+        <!-- Imagen real encima -->
+        ${imagenHTML}
+
+        <!-- Overlay gradiente -->
+        <div class="absolute inset-0 z-20 bg-gradient-to-t from-bark-900/60 via-transparent to-transparent pointer-events-none"></div>
+
+        <!-- Badge categoría -->
+        <div class="absolute top-3 left-3 z-30">
+          <span class="text-xs font-bold px-2 py-1 rounded-full bg-bark-800/80 text-wood-300 border border-wood-700/30">
+            ${cat.emoji || ''} ${cat.label || ''}
+          </span>
+        </div>
+
+        <!-- Badge destacado -->
+        ${manual.destacado
+          ? `<div class="absolute top-3 right-3 z-30">
+               <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2 py-1 rounded-full border border-amber-400/20">⭐ Destacado</span>
+             </div>`
+          : ''
+        }
+      </div>
+
+      <!-- Contenido -->
+      <div class="p-5">
+        <h3 class="font-bold text-wood-100 text-lg mb-2 group-hover:text-wood-50 leading-tight">
+          ${manual.titulo}
+        </h3>
+        <p class="text-wood-400 text-sm line-clamp-2 mb-4">
+          ${manual.descripcion}
+        </p>
+        <div class="flex items-center justify-between text-xs">
+          <div class="flex items-center gap-3">
+            <span class="font-bold ${nivelColor}">${manual.nivel}</span>
+            <span class="text-wood-500">·</span>
+            <span class="text-wood-500">⏱ ${manual.duracion}</span>
+          </div>
+          <span class="text-wood-600">${fecha}</span>
+        </div>
+      </div>
+
+    </a>
+  `;
+}
+
+  // Actualiza el grid y el título
+  function actualizarGrid(cat) {
+    const grid     = document.getElementById('manuales-grid');
+    const titulo   = document.getElementById('page-title');
+    const contador = document.getElementById('page-count');
+    const empty    = document.getElementById('empty-state');
+    const btns     = document.querySelectorAll('.filter-btn');
+
+    // Filtrar manuales
+    const filtrados = cat
+      ? MANUALES.filter(m => m.categoria === cat)
+      : MANUALES;
+
+    // ✅ Actualizar botones: resetear TODOS y activar solo el correcto
+    btns.forEach(btn => {
+      const btnCat = btn.getAttribute('data-cat') || '';
+
+      // Clases base que siempre tienen todos los botones
+      btn.className = 'filter-btn px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 border flex items-center gap-2';
+
+      if (btnCat === cat) {
+        // Botón ACTIVO
+        btn.classList.add('bg-wood-600', 'text-white', 'border-wood-600');
+      } else {
+        // Botón INACTIVO
+        btn.classList.add('bg-bark-900', 'text-wood-400', 'border-wood-800/30', 'hover:border-wood-600/50', 'hover:text-wood-200');
+      }
+    });
+
+    // Actualizar título
+    if (cat && CATEGORIAS[cat]) {
+      const info = CATEGORIAS[cat];
+      titulo.innerHTML = `<span class="text-5xl">${info.emoji}</span> Manuales de ${info.label}`;
+    } else {
+      titulo.innerHTML = `<span>📚</span> Todos los Manuales`;
+    }
+
+    // Actualizar contador
+    contador.textContent = `${filtrados.length} manual${filtrados.length !== 1 ? 'es' : ''} disponible${filtrados.length !== 1 ? 's' : ''}`;
+
+    // Renderizar cards
+    if (filtrados.length > 0) {
+      grid.innerHTML = filtrados.map(renderCard).join('');
+      grid.classList.remove('hidden');
+      empty.classList.add('hidden');
+    } else {
+      grid.innerHTML = '';
+      grid.classList.add('hidden');
+      empty.classList.remove('hidden');
+    }
+  }
+
+  // ✅ Interceptar clicks en los botones SIN recargar la página
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault(); // No navegar
+      const cat = btn.getAttribute('data-cat');
+      // Actualizar URL sin recargar
+      const newURL = cat ? `?cat=${cat}` : '/manuales';
+      history.pushState({}, '', newURL);
+      actualizarGrid(cat);
+    });
+  });
+
+  // Cargar al inicio con el ?cat= actual
+  actualizarGrid(getCatFromURL());
+
+  // Manejar botón atrás/adelante del browser
+  window.addEventListener('popstate', () => {
+    actualizarGrid(getCatFromURL());
+  });
+</script>

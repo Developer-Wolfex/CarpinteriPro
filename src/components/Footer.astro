@@ -1,0 +1,70 @@
+---
+// src/components/Footer.astro
+---
+
+<footer class="bg-bark-900 border-t border-wood-800/20 mt-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+      <!-- Brand -->
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <span class="text-2xl">🪚</span>
+          <span class="font-display text-xl font-bold text-wood-100">
+            Carpintería<span class="text-wood-500">Pro</span>
+          </span>
+        </div>
+        <p class="text-wood-400 text-sm leading-relaxed">
+          Manuales prácticos y detallados para carpinteros de todos los niveles. Desde principiantes hasta profesionales.
+        </p>
+      </div>
+
+      <!-- Links -->
+      <div>
+        <h3 class="font-display font-bold text-wood-200 mb-4">Categorías</h3>
+        <ul class="space-y-2 text-sm">
+          {[
+            ['Manuales de Melamina', '/manuales?cat=melamina'],
+            ['Manuales de Madera',   '/manuales?cat=madera'],
+            ['Manuales de MDF',      '/manuales?cat=mdf'],
+            ['Manuales de Bambú',    '/manuales?cat=bambu'],
+            ['Guías de Herramientas','/manuales?cat=herramientas'],
+          ].map(([label, href]) => (
+            <li>
+              <a href={href} class="text-wood-400 hover:text-wood-200 transition-colors">
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Info -->
+      <div>
+        <h3 class="font-display font-bold text-wood-200 mb-4">Información</h3>
+        <ul class="space-y-2 text-sm">
+          {[
+            ['Sobre Nosotros', '/sobre-nosotros'],
+            ['Contacto',       '/contacto'],
+            ['Política de Privacidad', '/privacidad'],
+          ].map(([label, href]) => (
+            <li>
+              <a href={href} class="text-wood-400 hover:text-wood-200 transition-colors">
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-wood-800/20 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-wood-500 text-xs">
+        © {new Date().getFullYear()} CarpinteríaPro. Todos los derechos reservados.
+      </p>
+      <p class="text-wood-600 text-xs">
+        Hecho con 🪵 para la comunidad carpintera
+      </p>
+    </div>
+  </div>
+</footer>

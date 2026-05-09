@@ -1,0 +1,61 @@
+---
+// src/layouts/BaseLayout.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SEO from '../components/SEO.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  image?: string;
+  type?: 'website' | 'article';
+}
+
+const { title, description, keywords, image, type } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <SEO
+    title={title}
+    description={description}
+    keywords={keywords}
+    image={image}
+    type={type}
+  />
+
+  <!-- Google AdSense: Agrega tu script cuando seas aprobado -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+  <!-- Schema.org para SEO -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "CarpinteríaPro",
+      "description": "Manuales prácticos de carpintería: melamina, madera, MDF y más",
+      "url": "https://tu-dominio.com"
+    }
+  </script>
+</head>
+
+<body class="min-h-screen flex flex-col">
+  <!-- Grain texture overlay -->
+  <div class="fixed inset-0 pointer-events-none grain-overlay z-0 opacity-50"></div>
+
+  <Header />
+
+  <main class="flex-1 relative z-10">
+    <slot />
+  </main>
+
+  <Footer />
+</body>
+</html>

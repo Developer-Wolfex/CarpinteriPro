@@ -1,0 +1,173 @@
+---
+// src/pages/manuales/[slug].astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import CardManual from '../../components/CardManual.astro';
+import { MANUALES, CATEGORIAS, getManualesByCategoria } from '../../data/manuales';
+import type { Manual } from '../../data/manuales';
+import { marked } from 'marked';
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+
+export async function getStaticPaths() {
+  return MANUALES.map(manual => ({
+    params: { slug: manual.slug },
+    props: { manual },
+  }));
+}
+
+interface Props { manual: Manual; }
+const { manual } = Astro.props;
+
+const cat = CATEGORIAS[manual.categoria];
+const relacionados = getManualesByCategoria(manual.categoria)
+  .filter(m => m.slug !== manual.slug)
+  .slice(0, 3);
+
+const nivelColor: Record<string, string> = {
+  'Básico':     'text-green-400 bg-green-900/20',
+  'Intermedio': 'text-yellow-400 bg-yellow-900/20',
+  'Avanzado':   'text-red-400 bg-red-900/20',
+};
+
+// ✅ ESTO ES LO QUE TE FALTABA
+let contenidoHTML = '';
+try {
+  const mdPath = join(process.cwd(), 'src/content/manuales', `${manual.slug}.md`);
+  const mdRaw = await readFile(mdPath, 'utf-8');
+  const sinFrontmatter = mdRaw.replace(/^---[\s\S]*?---\n/, '');
+  contenidoHTML = await marked(sinFrontmatter);
+} catch {
+  contenidoHTML = '';
+}
+---
+
+<BaseLayout
+  title={`${manual.titulo} | Carpintería Pro`}
+  description={manual.descripcion}
+  keywords={manual.keywords?.join(', ')}
+  type="article"
+>
+
+  <!-- Breadcrumb -->
+  <div class="border-b border-wood-800/20 bg-bark-950/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <nav class="flex items-center gap-2 text-xs text-wood-500 flex-wrap">
+        <a href="/" class="hover:text-wood-300 transition-colors">Inicio</a>
+        <span>/</span>
+        <a href="/manuales" class="hover:text-wood-300 transition-colors">Manuales</a>
+        <span>/</span>
+        <a href={`/manuales?cat=${manual.categoria}`} class="hover:text-wood-300 transition-colors">{cat.label}</a>
+        <span>/</span>
+        <span class="text-wood-400 truncate max-w-[200px]">{manual.titulo}</span>
+      </nav>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex flex-col lg:flex-row gap-10">
+
+      <!-- ─── ARTÍCULO ─── -->
+      <article class="flex-1 min-w-0">
+
+        <!-- Header del manual -->
+        <div class="mb-8">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <span class={`badge-category ${cat.color}`}>{cat.emoji} {cat.label}</span>
+            <span class={`badge-category ${nivelColor[manual.nivel]}`}>{manual.nivel}</span>
+            <span class="text-wood-500 text-xs">⏱ {manual.duracion}</span>
+            <span class="text-wood-600 text-xs">
+              {new Date(manual.fecha).toLocaleDateString('es-PE', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </span>
+          </div>
+
+          <h1 class="font-display text-3xl md:text-5xl font-black text-wood-50 leading-tight mb-4">
+            {manual.titulo}
+          </h1>
+
+          <p class="text-wood-300 text-lg leading-relaxed">
+            {manual.descripcion}
+          </p>
+        </div>
+
+        <!-- Imagen hero (placeholder) -->
+        <div class="rounded-2xl overflow-hidden bg-bark-800 h-64 md:h-80 flex items-center justify-center mb-8 border border-wood-800/30">
+          <!-- Cuando tengas imagen real:-->
+          <img src={manual.imagen} alt={manual.titulo} class="w-full h-full object-cover" />
+          
+        </div>
+
+        <!-- AdSense entre imagen y contenido -->
+        <div class="bg-bark-900/50 border border-wood-800/20 rounded-xl p-3 text-center mb-8">
+          <p class="text-wood-600 text-xs mb-2">PUBLICIDAD</p>
+          <div class="bg-bark-800 rounded-lg h-[90px] flex items-center justify-center">
+            <p class="text-wood-600 text-xs">Anuncio 728×90 (AdSense)</p>
+          </div>
+        </div>
+
+        <!-- ─── CONTENIDO DEL MANUAL ─── -->
+        <!-- 
+          INSTRUCCIONES PARA AGREGAR CONTENIDO:
+          Crea un archivo en src/content/manuales/{slug}.md
+          o escribe el contenido directamente aquí abajo.
+          
+          Para más escala, usa Astro Content Collections.
+        -->
+        <!-- ─── CONTENIDO DEL MANUAL ─── -->
+        <!-- ─── CONTENIDO DEL MANUAL ─── -->
+        {contenidoHTML ? (
+          <div class="space-y-2">
+            <div
+              class="prose prose-invert max-w-none
+                prose-headings:font-display prose-headings:text-amber-100
+                prose-h2:text-2xl prose-h2:font-bold prose-h2:border-b prose-h2:border-stone-700 prose-h2:pb-2 prose-h2:mt-10
+                prose-h3:text-lg prose-h3:font-semibold prose-h3:text-amber-200 prose-h3:mt-6
+                prose-p:text-stone-300 prose-p:leading-relaxed
+                prose-li:text-stone-300
+                prose-strong:text-amber-200
+                prose-table:w-full prose-table:text-sm
+                prose-th:bg-stone-800 prose-th:text-amber-200 prose-th:border prose-th:border-stone-700 prose-th:px-4 prose-th:py-2
+                prose-td:border prose-td:border-stone-700 prose-td:px-4 prose-td:py-2 prose-td:text-stone-300
+                prose-code:bg-stone-800 prose-code:text-amber-300 prose-code:rounded prose-code:px-1"
+              set:html={contenidoHTML}
+            />
+          </div>
+        ) : (
+          <div class="bg-bark-900 rounded-xl border border-wood-800/30 p-6 text-center">
+            <p class="text-wood-500 text-sm">Contenido próximamente.</p>
+          </div>
+        )}
+
+        <!-- AdSense al final del artículo -->
+        <div class="mt-10 bg-bark-900/50 border border-wood-800/20 rounded-xl p-3 text-center">
+          <p class="text-wood-600 text-xs mb-2">PUBLICIDAD</p>
+          <div class="bg-bark-800 rounded-lg h-[250px] flex items-center justify-center">
+            <p class="text-wood-600 text-xs">Anuncio 300×250 (AdSense)</p>
+          </div>
+        </div>
+
+        <!-- ─── MANUALES RELACIONADOS ─── -->
+        {relacionados.length > 0 && (
+          <div class="mt-12">
+            <h2 class="font-display text-2xl font-bold text-wood-100 mb-6 flex items-center gap-2">
+              <span>🔗</span> También te puede interesar
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {relacionados.map(m => <CardManual manual={m} />)}
+            </div>
+          </div>
+        )}
+
+      </article>
+
+      <!-- ─── SIDEBAR ─── -->
+      <div class="w-full lg:w-72 flex-shrink-0">
+        <div class="sticky top-20">
+          <Sidebar categoriaActiva={manual.categoria} />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</BaseLayout>

@@ -1,0 +1,137 @@
+---
+// src/components/Sidebar.astro
+import { CATEGORIAS, MANUALES } from '../data/manuales';
+import type { Categoria } from '../data/manuales';
+
+// Ya NO necesitamos la prop categoriaActiva
+const conteo = Object.fromEntries(
+  Object.keys(CATEGORIAS).map(cat => [
+    cat,
+    MANUALES.filter(m => m.categoria === cat).length
+  ])
+);
+---
+
+<aside class="space-y-6">
+
+  <!-- Filtro por categoría -->
+  <div class="bg-bark-900 rounded-xl border border-wood-800/30 p-5">
+    <h2 class="font-display font-bold text-wood-200 text-lg mb-4 flex items-center gap-2">
+      <span>📂</span> Manuales por Tipo
+    </h2>
+
+    <nav class="space-y-1">
+      <!-- "Todos" — sin data-cat -->
+      <a
+        href="/manuales"
+        data-cat=""
+        class="sidebar-link sidebar-filter"
+      >
+        <span>🗂️</span>
+        <span class="flex-1">Todos los manuales</span>
+        <span class="text-xs bg-wood-800/50 px-2 py-0.5 rounded-full text-wood-400">
+          {MANUALES.length}
+        </span>
+      </a>
+
+      {(Object.entries(CATEGORIAS) as [Categoria, typeof CATEGORIAS[Categoria]][]).map(([key, cat]) => (
+        <a
+          href={`/manuales?cat=${key}`}
+          data-cat={key}
+          class="sidebar-link sidebar-filter"
+        >
+          <span>{cat.emoji}</span>
+          <span class="flex-1">{cat.label}</span>
+          <span class="text-xs bg-wood-800/50 px-2 py-0.5 rounded-full text-wood-400">
+            {conteo[key]}
+          </span>
+        </a>
+      ))}
+    </nav>
+  </div>
+
+  <!-- Niveles -->
+  <div class="bg-bark-900 rounded-xl border border-wood-800/30 p-5">
+    <h2 class="font-display font-bold text-wood-200 text-lg mb-4 flex items-center gap-2">
+      <span>📊</span> Por Nivel
+    </h2>
+    <div class="space-y-2">
+      {[
+        { nivel: 'Básico',     color: 'bg-green-500',  porcentaje: 40 },
+        { nivel: 'Intermedio', color: 'bg-yellow-500', porcentaje: 45 },
+        { nivel: 'Avanzado',   color: 'bg-red-500',    porcentaje: 15 },
+      ].map(item => (
+        <div class="flex items-center gap-3">
+          <span class="text-wood-400 text-xs w-20">{item.nivel}</span>
+          <div class="flex-1 bg-bark-800 rounded-full h-1.5">
+            <div class={`${item.color} h-1.5 rounded-full`} style={`width: ${item.porcentaje}%`}></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- AdSense sidebar -->
+  <div class="bg-bark-900 rounded-xl border border-wood-800/20 p-4 text-center">
+    <p class="text-wood-600 text-xs mb-2">PUBLICIDAD</p>
+    <div class="bg-bark-800 rounded-lg h-[250px] flex items-center justify-center">
+      <p class="text-wood-600 text-xs">Anuncio 300×250</p>
+    </div>
+  </div>
+
+  <!-- Manuales recientes -->
+  <div class="bg-bark-900 rounded-xl border border-wood-800/30 p-5">
+    <h2 class="font-display font-bold text-wood-200 text-lg mb-4 flex items-center gap-2">
+      <span>🔥</span> Más recientes
+    </h2>
+    <div class="space-y-3">
+      {MANUALES.slice(0, 4).map(m => (
+        <a href={`/manuales/${m.slug}`} class="flex gap-3 group">
+          <div class="w-12 h-12 bg-bark-800 rounded-lg flex items-center justify-center text-xl flex-shrink-0">
+            {CATEGORIAS[m.categoria].emoji}
+          </div>
+          <div>
+            <p class="text-wood-300 text-xs font-bold leading-snug group-hover:text-wood-100 transition-colors line-clamp-2">
+              {m.titulo}
+            </p>
+            <p class="text-wood-600 text-xs mt-0.5">{m.nivel}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+</aside>
+
+<!-- ✅ JS que activa el link correcto según ?cat= en la URL -->
+<script>
+  function activarSidebarLink() {
+    const cat = new URLSearchParams(window.location.search).get('cat') || '';
+
+    document.querySelectorAll('.sidebar-filter').forEach(link => {
+      const linkCat = link.getAttribute('data-cat') || '';
+
+      if (linkCat === cat) {
+        // Activar este link
+        link.classList.add('active');
+      } else {
+        // Desactivar los demás
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  // Al cargar la página
+  activarSidebarLink();
+
+  // Al usar botones atrás/adelante del browser
+  window.addEventListener('popstate', activarSidebarLink);
+
+  // ✅ Escucha cuando el index.astro cambia la URL con history.pushState
+  // (necesario porque pushState no dispara 'popstate')
+  const originalPushState = history.pushState.bind(history);
+  history.pushState = function(...args) {
+    originalPushState(...args);
+    activarSidebarLink();
+  };
+</script>
