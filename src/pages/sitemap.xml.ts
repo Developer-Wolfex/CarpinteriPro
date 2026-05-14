@@ -1,3 +1,4 @@
+
 // src/pages/sitemap.xml.ts
 import { MANUALES } from '../data/manuales';
 
@@ -5,42 +6,49 @@ interface SitemapPage {
   url: string;
   priority: string;
   changefreq: string;
-  lastmod?: string;
+  lastmod: string;
+}
+
+function today(): string {
+  return new Date().toISOString().split('T')[0];
+}
+
+function safeDate(fecha: string): string {
+  const d = new Date(fecha);
+  return isNaN(d.getTime()) ? today() : d.toISOString().split('T')[0];
 }
 
 export async function GET() {
-  const baseUrl = 'https://carpinteriapro.com';
+  const base = 'https://carpinteriapro.com';
 
   const staticPages: SitemapPage[] = [
-    { url: '/',                        priority: '1.0', changefreq: 'daily' },
-    { url: '/manuales',                priority: '0.9', changefreq: 'daily' },
-    { url: '/manuales?cat=melamina',   priority: '0.8', changefreq: 'weekly' },
-    { url: '/manuales?cat=madera',     priority: '0.8', changefreq: 'weekly' },
-    { url: '/manuales?cat=mdf',        priority: '0.8', changefreq: 'weekly' },
-    { url: '/manuales?cat=bambu',      priority: '0.7', changefreq: 'weekly' },
-    { url: '/manuales?cat=herramientas', priority: '0.7', changefreq: 'weekly' },
+    { url: '/',         priority: '1.0', changefreq: 'daily',  lastmod: today() },
+    { url: '/manuales', priority: '0.9', changefreq: 'weekly', lastmod: today() },
   ];
 
   const manualPages: SitemapPage[] = MANUALES.map(m => ({
     url: `/manuales/${m.slug}`,
     priority: m.destacado ? '0.9' : '0.7',
     changefreq: 'monthly',
-    lastmod: m.fecha,
+    lastmod: safeDate(m.fecha),
   }));
 
-  const allPages: SitemapPage[] = [...staticPages, ...manualPages];
+  const pages = [...staticPages, ...manualPages];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allPages.map(p => `  <url>
-    <loc>${baseUrl}${p.url}</loc>
-    <priority>${p.priority}</priority>
+${pages.map(p => `  <url>
+    <loc>${base}${p.url}</loc>
+    <lastmod>${p.lastmod}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
-    ${p.lastmod ? `<lastmod>${p.lastmod}</lastmod>` : ''}
+    <priority>${p.priority}</priority>
   </url>`).join('\n')}
 </urlset>`;
 
   return new Response(xml, {
-    headers: { 'Content-Type': 'application/xml' },
+    headers: {
+      'Content-Type': 'application/xml; charset=utf-8',
+      'Cache-Control': 'public, max-age=3600',
+    },
   });
 }
