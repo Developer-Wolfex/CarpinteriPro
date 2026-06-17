@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import LearningPath from '../../components/LearningPath.astro';
+import AdSense from '../../components/AdSense.astro';
+
+const temas = [
+  { titulo: 'Diseño profesional de cocinas integrales', texto: 'Triángulo de trabajo, modulación y coordinación con electrodomésticos y cubierta.' },
+  { titulo: 'Closets modulares', texto: 'Zonificación según el inventario real del usuario: colgado, cajones, zapatero, accesorios.' },
+  { titulo: 'Centros de entretenimiento', texto: 'Gestión de cables, ventilación de equipos y cargas de peso en muebles suspendidos.' },
+  { titulo: 'Muebles a medida', texto: 'Levantamiento de espacio real (no solo plano), considerando muros no perfectamente perpendiculares.' },
+  { titulo: 'Ergonomía', texto: 'Alturas de trabajo, alcance y comodidad de uso real, no solo estética del diseño.' },
+  { titulo: 'Optimización de materiales', texto: 'Despiece a nivel de proyecto completo, no solo por mueble individual, para minimizar desperdicio total.' },
+  { titulo: 'Producción eficiente', texto: 'Cortar, cantear y perforar por lotes según tipo de pieza, no módulo por módulo.' },
+  { titulo: 'Instalación en obra', texto: 'Verificación de nivel de piso y pared antes de instalar — la causa más común de ajustes posteriores.' },
+  { titulo: 'Acabados premium', texto: 'Herrajes de cierre suave, iluminación LED integrada y detalles que elevan la percepción de calidad.' },
+  { titulo: 'Resolución de problemas reales', texto: 'Muros no a escuadra, pisos desnivelados, medidas de plano que no coinciden con la obra real.' },
+  { titulo: 'Costeo profesional', texto: 'Material + mano de obra por etapa + margen de utilidad — no solo el costo del tablero.' },
+  { titulo: 'Cotización para clientes', texto: 'Presupuestos claros, desglosados y con tiempos de entrega realistas.' },
+  { titulo: 'Flujo de trabajo completo', texto: 'Desde el levantamiento inicial hasta la entrega — el proceso íntegro de un proyecto profesional.' },
+];
+---
+
+<BaseLayout
+  title="Carpintería Avanzada: Cocinas, Closets y Costeo Profesional"
+  description="Diseño profesional de cocinas y closets, ergonomía, producción eficiente, instalación en obra y costeo para clientes."
+  keywords="carpinteria avanzada, diseño profesional de cocinas, costeo de muebles a medida, cotizar muebles a clientes"
+>
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Aprende', href: '/aprende' }, { label: 'Avanzado' }]} />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <span class="badge-category mb-4 inline-block" style="color:var(--color-wood-700); background:color-mix(in srgb, var(--color-wood-700) 12%, transparent);">🔴 Nivel Avanzado</span>
+    <h1 class="font-display text-4xl font-black leading-tight mb-5" style="color:var(--color-wood-100);">
+      Carpintería Avanzada: proyectos profesionales completos
+    </h1>
+    <p class="text-lg leading-relaxed mb-10" style="color:var(--color-wood-300);">
+      Este nivel asume que ya dominas el diseño y la fabricación de muebles individuales. Aquí el foco es el
+      <strong>proyecto completo</strong>: cocinas, closets, costeo real y trato profesional con clientes.
+    </p>
+
+    <AdSense slot="0000000033" format="horizontal" className="mb-10" />
+
+    <div class="space-y-4">
+      {temas.map((t, i) => (
+        <div class="rounded-xl p-5 flex gap-4" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:color-mix(in srgb, var(--color-wood-700) 14%, transparent); color:var(--color-wood-700);">
+            {i + 1}
+          </div>
+          <div>
+            <h2 class="font-bold mb-1" style="color:var(--color-wood-200);">{t.titulo}</h2>
+            <p class="text-sm leading-relaxed" style="color:var(--color-wood-400);">{t.texto}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 rounded-2xl p-6" style="background:color-mix(in srgb, var(--color-wood-500) 8%, var(--color-bark-900)); border:1px solid color-mix(in srgb, var(--color-wood-500) 22%, transparent);">
+      <p class="font-bold mb-2" style="color:var(--color-wood-100);">Practica lo aprendido</p>
+      <p class="text-sm mb-4" style="color:var(--color-wood-400);">Estos dos proyectos cubren un flujo de trabajo completo de nivel avanzado:</p>
+      <div class="flex flex-wrap gap-3">
+        <a href="/proyectos/cocina-en-l-con-isla" class="btn-secondary">Cocina en L con isla →</a>
+        <a href="/proyectos/closet-walk-in-modular" class="btn-secondary">Closet walk-in modular →</a>
+      </div>
+    </div>
+
+    <LearningPath anterior={{ label: 'Volver a Nivel Intermedio', href: '/aprende/intermedio' }} />
+  </div>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+// src/components/ProjectCard.astro
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { proyecto: CollectionEntry<'proyectos'> }
+const { proyecto } = Astro.props;
+const { titulo, descripcion, nivel, tiempoEstimado, dificultad, destacado } = proyecto.data;
+
+const nivelStyle: Record<string, string> = {
+  'Básico':     'color:var(--color-olive-600); background:color-mix(in srgb, var(--color-olive-500) 12%, transparent);',
+  'Intermedio': 'color:var(--color-wood-600); background:color-mix(in srgb, var(--color-wood-500) 12%, transparent);',
+  'Avanzado':   'color:var(--color-wood-700); background:color-mix(in srgb, var(--color-wood-700) 12%, transparent);',
+};
+---
+
+<a href={`/proyectos/${proyecto.id}`} class="card-manual group block p-5">
+  <div class="flex items-center justify-between gap-2 mb-3">
+    <span class="badge-category" style={nivelStyle[nivel]}>{nivel}</span>
+    {destacado && <span class="badge-category" style="background:var(--color-wood-500); color:#fff8f0; border-color:var(--color-wood-500);">⭐ Destacado</span>}
+  </div>
+  <h3 class="font-display font-bold text-lg leading-snug mb-2" style="color:var(--color-wood-100);">{titulo}</h3>
+  <p class="text-sm leading-relaxed line-clamp-2 mb-4" style="color:var(--color-wood-400);">{descripcion}</p>
+  <div class="flex items-center gap-3 text-xs" style="color:var(--color-wood-400);">
+    <span>⏱ {tiempoEstimado}</span>
+    <span style="color:var(--color-wood-800);">·</span>
+    <span>{'●'.repeat(dificultad)}{'○'.repeat(5 - dificultad)} dificultad</span>
+  </div>
+</a>

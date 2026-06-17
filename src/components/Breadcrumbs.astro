@@ -1,0 +1,38 @@
+---
+// src/components/Breadcrumbs.astro
+// Breadcrumb reutilizable + BreadcrumbList schema.org.
+interface Crumb { label: string; href?: string }
+interface Props { items: Crumb[] }
+
+const { items } = Astro.props;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, Astro.site).toString() } : {}),
+  })),
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<div style="border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 50%, transparent); background:var(--color-bark-900);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+    <nav class="flex items-center gap-2 text-xs flex-wrap" style="color:var(--color-wood-400);" aria-label="Ruta de navegación">
+      {items.map((item, i) => (
+        <>
+          {i > 0 && <span aria-hidden="true">/</span>}
+          {item.href && i < items.length - 1 ? (
+            <a href={item.href} class="transition-colors" style="color:var(--color-wood-400);">{item.label}</a>
+          ) : (
+            <span class="truncate max-w-[260px]" style="color:var(--color-wood-200);" aria-current={i === items.length - 1 ? 'page' : undefined}>{item.label}</span>
+          )}
+        </>
+      ))}
+    </nav>
+  </div>
+</div>

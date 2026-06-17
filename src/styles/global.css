@@ -1,49 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lato:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* ──────────────────────────────────────────────────────────
+   SISTEMA DE DISEÑO — CarpinteríaPro
+   Paleta cálida inspirada en madera, nogal y terracota.
+   Los nombres de token (wood-*, bark-*) se mantienen para no
+   romper las clases ya usadas en los componentes; solo cambian
+   los valores hacia una estética clara y artesanal.
+   ────────────────────────────────────────────────────────── */
 @theme {
-  --color-wood-50:  #f0fdff;
-  --color-wood-100: #ecfeff;
-  --color-wood-200: #cffafe;
-  --color-wood-300: #a5f3fc;
-  --color-wood-400: #67e8f9;
-  --color-wood-500: #06b6d4;
-  --color-wood-600: #0891b2;
-  --color-wood-700: #0e7490;
-  --color-wood-800: #155e75;
-  --color-wood-900: #164e63;
-  --color-wood-950: #083344;
+  /* Superficies — de crema (fondo) a arena (tarjetas/acentos) */
+  --color-bark-950: #faf4e9;   /* fondo principal de página */
+  --color-bark-900: #fffcf6;   /* superficie de tarjetas / header */
+  --color-bark-800: #efe2c8;   /* superficie secundaria, placeholders */
 
-  --color-bark-800: #112240;
-  --color-bark-900: #0a192f;
-  --color-bark-950: #020c1b;
+  /* Texto y acentos — de espresso (texto) a terracota (acento) */
+  --color-wood-50:  #fbf4e9;   /* tinte muy claro para fondos de badge */
+  --color-wood-100: #2a2118;   /* texto principal / titulares (espresso) */
+  --color-wood-200: #3d2f22;   /* titulares secundarios */
+  --color-wood-300: #5c4b3b;   /* texto de cuerpo */
+  --color-wood-400: #7c6a57;   /* texto silenciado */
+  --color-wood-500: #b5582f;   /* acento principal — terracota */
+  --color-wood-600: #9c4626;   /* acento hover / oscuro */
+  --color-wood-700: #7a3a24;   /* acento profundo */
+  --color-wood-800: #d9c7a8;   /* tono de borde, arena cálida */
+  --color-wood-900: #8c7456;   /* arena oscura */
+  --color-wood-950: #4a3826;   /* marrón más oscuro de la escala */
 
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-body: "Lato", sans-serif;
+  /* Acento secundario — verde oliva, uso puntual (niveles, detalles) */
+  --color-olive-500: #74804f;
+  --color-olive-600: #5b6740;
+  --color-olive-700: #475131;
+
+  --font-display: "Fraunces", "Playfair Display", Georgia, serif;
+  --font-body: "Inter", "Lato", sans-serif;
+
+  --shadow-soft: 0 1px 2px rgba(42,33,24,0.04), 0 8px 24px -8px rgba(42,33,24,0.10);
+  --shadow-soft-lg: 0 4px 8px rgba(42,33,24,0.05), 0 20px 40px -12px rgba(42,33,24,0.16);
 }
 
 @layer base {
   html { scroll-behavior: smooth; }
   body {
     background-color: var(--color-bark-950);
-    color: var(--color-wood-100);
+    color: var(--color-wood-300);
     font-family: var(--font-body);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--color-wood-100);
+  }
+  a { color: inherit; }
+
+  /* Foco visible consistente para navegación por teclado */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--color-wood-500);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
 @layer components {
   .card-manual {
     background: var(--color-bark-900);
-    border: 1px solid color-mix(in srgb, var(--color-wood-800) 30%, transparent);
-    border-radius: 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--color-wood-800) 50%, transparent);
+    border-radius: 1rem;
     overflow: hidden;
-    transition: all 0.3s;
+    transition: all 0.25s ease;
     display: block;
+    box-shadow: var(--shadow-soft);
   }
   .card-manual:hover {
-    border-color: color-mix(in srgb, var(--color-wood-500) 60%, transparent);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-color: color-mix(in srgb, var(--color-wood-500) 45%, transparent);
+    box-shadow: var(--shadow-soft-lg);
     transform: translateY(-4px);
   }
 
@@ -51,17 +85,20 @@
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 2px 10px;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
     border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-bark-900) 88%, transparent);
+    color: var(--color-wood-600);
+    border: 1px solid color-mix(in srgb, var(--color-wood-800) 70%, transparent);
   }
 
   .sidebar-link {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 0.6rem;
     color: var(--color-wood-300);
     font-size: 0.875rem;
     transition: all 0.2s;
@@ -69,14 +106,14 @@
     text-decoration: none;
   }
   .sidebar-link:hover {
-    background: color-mix(in srgb, var(--color-wood-800) 30%, transparent);
+    background: color-mix(in srgb, var(--color-wood-800) 35%, transparent);
     color: var(--color-wood-100);
   }
   .sidebar-link.active {
-    background: color-mix(in srgb, var(--color-wood-700) 40%, transparent);
-    color: var(--color-wood-100);
+    background: color-mix(in srgb, var(--color-wood-500) 12%, transparent);
+    color: var(--color-wood-600);
     font-weight: 700;
-    border-left: 2px solid var(--color-wood-400);
+    border-left: 2px solid var(--color-wood-500);
   }
 
   .section-title {
@@ -86,10 +123,82 @@
     color: var(--color-wood-100);
     line-height: 1.2;
   }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-wood-500);
+  }
+
+  /* Botones reutilizables */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, var(--color-wood-500), var(--color-wood-600));
+    color: #fff8f0;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    box-shadow: 0 8px 24px -8px color-mix(in srgb, var(--color-wood-500) 55%, transparent);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -8px color-mix(in srgb, var(--color-wood-500) 65%, transparent);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 0.75rem;
+    background: var(--color-bark-900);
+    color: var(--color-wood-200);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--color-wood-800) 70%, transparent);
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--color-wood-500);
+    color: var(--color-wood-600);
+  }
+
+  /* Espacio reservado para anuncios — evita CLS */
+  .ad-slot {
+    width: 100%;
+    border-radius: 0.85rem;
+    background: color-mix(in srgb, var(--color-bark-800) 55%, transparent);
+    border: 1px dashed color-mix(in srgb, var(--color-wood-800) 80%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .ad-slot__label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-wood-400);
+  }
 }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-bark-950); }
-::-webkit-scrollbar-thumb { background: var(--color-wood-700); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-wood-600); }
+::-webkit-scrollbar-thumb { background: var(--color-wood-800); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-wood-500); }
+
+/* Textura sutil de grano — usada como overlay en BaseLayout */
+.grain-overlay {
+  background-image: radial-gradient(color-mix(in srgb, var(--color-wood-900) 6%, transparent) 1px, transparent 1px);
+  background-size: 3px 3px;
+}

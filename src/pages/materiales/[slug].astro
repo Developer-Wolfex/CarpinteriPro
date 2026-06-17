@@ -1,0 +1,92 @@
+---
+// src/pages/materiales/[slug].astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSense from '../../components/AdSense.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const materiales = await getCollection('materiales');
+  return materiales.map(entry => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { titulo, descripcion, resumen, costoAprox, resistencia, mantenimiento, pros, contras, cuandoUsar, cuandoNoUsar, fecha, keywords } = entry.data;
+const { Content } = await render(entry);
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: titulo,
+  description: descripcion,
+  datePublished: fecha,
+  dateModified: fecha,
+  author: { '@type': 'Organization', name: 'CarpinteríaPro' },
+  publisher: { '@type': 'Organization', name: 'CarpinteríaPro' },
+};
+---
+
+<BaseLayout title={`${titulo} | CarpinteríaPro`} description={descripcion} keywords={keywords?.join(', ')} type="article">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Materiales', href: '/materiales' }, { label: titulo }]} />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="font-display text-3xl md:text-4xl font-black leading-tight mb-4" style="color:var(--color-wood-100);">{titulo}</h1>
+    <p class="text-lg leading-relaxed mb-8" style="color:var(--color-wood-300);">{resumen}</p>
+
+    <!-- Ficha técnica rápida -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div class="rounded-xl p-4" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+        <p class="text-[10px] uppercase tracking-widest font-semibold mb-1" style="color:var(--color-wood-400);">Costo aprox.</p>
+        <p class="text-sm font-bold" style="color:var(--color-wood-200);">{costoAprox}</p>
+      </div>
+      <div class="rounded-xl p-4" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+        <p class="text-[10px] uppercase tracking-widest font-semibold mb-1" style="color:var(--color-wood-400);">Resistencia</p>
+        <p class="text-sm font-bold" style="color:var(--color-wood-200);">{resistencia}</p>
+      </div>
+      <div class="rounded-xl p-4" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+        <p class="text-[10px] uppercase tracking-widest font-semibold mb-1" style="color:var(--color-wood-400);">Mantenimiento</p>
+        <p class="text-sm font-bold" style="color:var(--color-wood-200);">{mantenimiento}</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+      <div class="rounded-xl p-5" style="background:color-mix(in srgb, var(--color-olive-500) 8%, transparent); border:1px solid color-mix(in srgb, var(--color-olive-500) 22%, transparent);">
+        <h2 class="font-bold text-sm mb-3" style="color:var(--color-olive-600);">✓ Ventajas</h2>
+        <ul class="space-y-1.5 text-sm" style="color:var(--color-wood-300);">
+          {pros.map(p => <li>• {p}</li>)}
+        </ul>
+      </div>
+      <div class="rounded-xl p-5" style="background:color-mix(in srgb, var(--color-wood-700) 6%, transparent); border:1px solid color-mix(in srgb, var(--color-wood-700) 20%, transparent);">
+        <h2 class="font-bold text-sm mb-3" style="color:var(--color-wood-700);">✕ Desventajas</h2>
+        <ul class="space-y-1.5 text-sm" style="color:var(--color-wood-300);">
+          {contras.map(c => <li>• {c}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+      <div class="rounded-xl p-5" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+        <h2 class="font-bold text-sm mb-2" style="color:var(--color-wood-200);">Cuándo conviene usarlo</h2>
+        <p class="text-sm" style="color:var(--color-wood-400);">{cuandoUsar}</p>
+      </div>
+      <div class="rounded-xl p-5" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+        <h2 class="font-bold text-sm mb-2" style="color:var(--color-wood-200);">Cuándo NO conviene</h2>
+        <p class="text-sm" style="color:var(--color-wood-400);">{cuandoNoUsar}</p>
+      </div>
+    </div>
+
+    <AdSense slot="0000000011" format="in-article" className="mb-10" />
+
+    <div class="prose max-w-none prose-headings:font-display prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h3:text-lg prose-h3:mt-6 prose-table:w-full prose-table:text-sm"
+         style="color:var(--color-wood-300); --tw-prose-headings:var(--color-wood-100); --tw-prose-body:var(--color-wood-300); --tw-prose-bold:var(--color-wood-200); --tw-prose-th-borders:var(--color-wood-800); --tw-prose-td-borders:var(--color-wood-800);">
+      <Content />
+    </div>
+
+    <AdSense slot="0000000012" format="rectangle" className="mt-10" />
+
+    <div class="mt-10 text-center">
+      <a href="/materiales" class="btn-secondary">← Ver todos los materiales</a>
+    </div>
+  </div>
+</BaseLayout>

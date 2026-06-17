@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSense from '../../components/AdSense.astro';
+import FAQ from '../../components/FAQ.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(entry => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { titulo, descripcion, categoria, fecha, keywords, faq } = entry.data;
+const { Content } = await render(entry);
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: titulo,
+  description: descripcion,
+  datePublished: fecha,
+  dateModified: fecha,
+  author: { '@type': 'Organization', name: 'CarpinteríaPro' },
+  publisher: { '@type': 'Organization', name: 'CarpinteríaPro' },
+};
+---
+
+<BaseLayout title={`${titulo} | CarpinteríaPro`} description={descripcion} keywords={keywords?.join(', ')} type="article">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Blog', href: '/blog' }, { label: titulo }]} />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <span class="badge-category mb-4 inline-block">{categoria}</span>
+    <h1 class="font-display text-3xl md:text-4xl font-black leading-tight mb-4" style="color:var(--color-wood-100);">{titulo}</h1>
+    <p class="text-lg leading-relaxed mb-8" style="color:var(--color-wood-300);">{descripcion}</p>
+
+    <AdSense slot="0000000061" format="horizontal" className="mb-8" />
+
+    <div class="prose max-w-none prose-headings:font-display prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h3:text-lg prose-h3:mt-6 prose-table:w-full prose-table:text-sm"
+         style="color:var(--color-wood-300); --tw-prose-headings:var(--color-wood-100); --tw-prose-body:var(--color-wood-300); --tw-prose-bold:var(--color-wood-200); --tw-prose-th-borders:var(--color-wood-800); --tw-prose-td-borders:var(--color-wood-800);">
+      <Content />
+    </div>
+
+    <AdSense slot="0000000062" format="rectangle" className="mt-10" />
+
+    <FAQ items={faq ?? []} />
+
+    <div class="mt-10 text-center">
+      <a href="/blog" class="btn-secondary">← Ver todos los artículos</a>
+    </div>
+  </div>
+</BaseLayout>

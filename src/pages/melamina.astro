@@ -1,0 +1,169 @@
+---
+// src/pages/melamina.astro — página pilar especial de melamina
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import AdSense from '../components/AdSense.astro';
+import FAQ from '../components/FAQ.astro';
+
+const faqItems = [
+  { pregunta: '¿Qué hoja de sierra debo usar para cortar melamina?', respuesta: 'Una hoja específica para melamina/laminados, con muchos dientes finos (idealmente 80-100 dientes en una hoja de 250mm) y punta de carburo. Reduce drásticamente el astillado del papel decorativo.' },
+  { pregunta: '¿Cómo evito que la melamina se astille al cortar?', respuesta: 'Usa la hoja correcta, corta con la cara buena hacia abajo si usas sierra circular de mano (el astillado ocurre en la cara de salida de la hoja), y considera marcar con cinta de carrocero la línea de corte para reducir el astillado superficial.' },
+  { pregunta: '¿Qué tornillo se usa para unir piezas de melamina?', respuesta: 'El tornillo confirmat es el estándar para uniones canto-a-canto. Para fijar herrajes (bisagras, correderas), usa siempre el tornillo específico que viene con el herraje o uno de diámetro equivalente.' },
+  { pregunta: '¿La melamina resiste la humedad?', respuesta: 'La superficie resiste bien salpicaduras y limpieza con paño húmedo, pero el núcleo (MDF o MDP) se hincha si el agua entra por un canto sin sellar. Por eso cantear bien cada corte es crítico, especialmente en cocinas y baños.' },
+];
+---
+
+<BaseLayout
+  title="Melamina: Guía Completa para Trabajarla Como Profesional"
+  description="Qué es la melamina, tipos, medidas, cómo cortarla sin astillar, cantear, perforar, unir piezas, herrajes, errores comunes, diseño y costeo."
+  keywords="que es la melamina, como cortar melamina sin astillar, como cantear melamina, melamina para muebles"
+>
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Melamina' }]} />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <p class="eyebrow mb-3">Sección especial</p>
+    <h1 class="font-display text-4xl font-black leading-tight mb-5" style="color:var(--color-wood-100);">
+      Melamina: la guía completa para trabajarla bien
+    </h1>
+    <p class="text-lg leading-relaxed mb-8" style="color:var(--color-wood-300);">
+      La melamina es el material más usado en muebles modulares modernos — cocinas, closets, escritorios — porque combina
+      buen acabado, bajo costo y facilidad de producción. Esta guía reúne todo lo que necesitas para trabajarla
+      como un profesional, desde el corte hasta la venta.
+    </p>
+
+    <AdSense slot="0000000020" format="horizontal" className="mb-10" />
+
+    <div class="prose max-w-none prose-headings:font-display prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:pb-2 prose-h3:text-lg prose-h3:mt-6 prose-table:w-full prose-table:text-sm"
+         style="color:var(--color-wood-300); --tw-prose-headings:var(--color-wood-100); --tw-prose-body:var(--color-wood-300); --tw-prose-bold:var(--color-wood-200); --tw-prose-th-borders:var(--color-wood-800); --tw-prose-td-borders:var(--color-wood-800);">
+
+      <h2>¿Qué es la melamina?</h2>
+      <p>
+        La melamina es un tablero de partículas (MDP) o de fibra (MDF) recubierto con una o dos láminas de papel decorativo
+        impregnado en resina melamínica, fusionadas al núcleo con calor y presión. El resultado es una superficie dura,
+        uniforme y lista para usar, sin necesidad de pintura ni sellador adicional.
+      </p>
+
+      <h2>Tipos y medidas comerciales</h2>
+      <p>Las planchas de melamina se comercializan en tamaños estándar que varían según el país y proveedor, pero los más comunes son:</p>
+      <table>
+        <thead><tr><th>Medida aproximada</th><th>Uso típico</th></tr></thead>
+        <tbody>
+          <tr><td>2.44 x 1.83 m</td><td>El tamaño más estándar para muebles en general</td></tr>
+          <tr><td>2.75 x 1.83 m</td><td>Piezas más largas sin unión (puertas altas, laterales de closet)</td></tr>
+          <tr><td>1.83 x 0.91 m (media plancha)</td><td>Proyectos pequeños, evita comprar una plancha completa</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Espesores</h3>
+      <table>
+        <thead><tr><th>Espesor</th><th>Uso típico</th></tr></thead>
+        <tbody>
+          <tr><td>9 mm</td><td>Fondos de muebles y cajones</td></tr>
+          <tr><td>15 mm</td><td>Entrepaños y laterales de muebles ligeros</td></tr>
+          <tr><td>18 mm</td><td>Estándar de la industria: cuerpos, puertas, repisas</td></tr>
+          <tr><td>25 mm</td><td>Cubiertas de mesa y piezas que requieren más rigidez</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Acabados</h3>
+      <p>
+        Más allá del color, la textura superficial cambia mucho la percepción del mueble: mate, brillante, texturizada
+        (poro abierto símil madera) y metalizada son las más comunes. Las texturas símil madera de buena calidad son
+        casi indistinguibles al tacto de un enchapado real a distancia normal de uso.
+      </p>
+
+      <h2>Cómo cortar melamina sin astillar</h2>
+      <p>El astillado del papel decorativo en el borde de corte es el problema número uno al trabajar melamina. Para evitarlo:</p>
+      <ul>
+        <li>Usa una hoja de sierra específica para melamina/laminados, con muchos dientes finos (80-100 dientes) y punta de carburo.</li>
+        <li>En sierra circular de mano, corta con la cara "buena" hacia abajo — el astillado ocurre principalmente en la cara de salida de la hoja.</li>
+        <li>En sierra de mesa o escuadradora, ajusta la velocidad de avance: empujar muy rápido astilla más que un avance constante y moderado.</li>
+        <li>Para cortes especialmente delicados, marca la línea con cinta de carrocero antes de cortar — reduce el astillado superficial.</li>
+        <li>Mantén la hoja afilada: una hoja desgastada astilla mucho más que una nueva, sin importar cuántos dientes tenga.</li>
+      </ul>
+
+      <h2>Herramientas recomendadas</h2>
+      <ul>
+        <li><strong>Sierra circular con guía de corte o sierra de mesa</strong>: para cortes rectos y precisos.</li>
+        <li><strong>Canteadora o plancha de canteado</strong>: para aplicar canto PVC en los bordes cortados.</li>
+        <li><strong>Taladro con broca para bisagras (35mm)</strong>: para el alojamiento de bisagras de copa.</li>
+        <li><strong>Escuadra y nivel</strong>: imprescindibles para verificar ángulos rectos en cada unión.</li>
+      </ul>
+
+      <h2>Cómo cantear melamina correctamente</h2>
+      <p>
+        El canteado sella el borde cortado, protegiéndolo de humedad y golpes. El proceso resumido: limpia el borde de polvo,
+        aplica la cinta de canto con calor uniforme (canteadora o plancha), presiona de inmediato con un rodillo mientras
+        el adhesivo está caliente, y recorta el excedente con una cuchilla o fresadora de canto antes de que el PVC se enfríe
+        del todo. Lima ligeramente las esquinas para evitar que se levanten con el uso.
+      </p>
+      <p>Revisa la <a href="/materiales/canto-pvc">ficha completa de canto PVC</a> para el detalle paso a paso y los errores más comunes.</p>
+
+      <h2>Cómo perforar melamina sin dañarla</h2>
+      <ul>
+        <li>Usa brocas afiladas específicas para madera/laminados; una broca desgastada astilla la superficie alrededor del orificio.</li>
+        <li>Pretaladra siempre antes de atornillar, con un diámetro algo menor al del tornillo.</li>
+        <li>Para el alojamiento de bisagras de copa, usa una broca tipo "fresa" de 35mm a velocidad media, sin forzar el avance.</li>
+        <li>Coloca un retazo de madera o melamina debajo de la pieza al perforar de lado a lado, para evitar astillado en la salida de la broca.</li>
+      </ul>
+
+      <h2>Cómo unir piezas de melamina</h2>
+      <p>
+        La unión más común en muebles de melamina es canto-a-canto con tornillo confirmat: un tornillo de rosca gruesa
+        diseñado específicamente para agarrar bien en el núcleo del tablero, atravesando una pieza y enroscándose en el
+        canto de la otra (generalmente con un taco o cazoleta para ocultar la cabeza). También se usan tarugos de madera
+        combinados con cola para reforzar uniones, especialmente en piezas que cargan peso.
+      </p>
+
+      <h2>Qué tornillos y herrajes usar</h2>
+      <p>
+        Para uniones estructurales: <strong>tornillo confirmat 6.3 x 50mm</strong> es el estándar. Para herrajes, usa siempre
+        el tornillo que recomienda el fabricante de la bisagra o corredera — son cortos y de rosca específica para no
+        atravesar el tablero. Revisa nuestra <a href="/materiales/herrajes-y-herramientas-de-union">guía completa de herrajes</a> para
+        elegir bisagras y correderas según el uso del mueble.
+      </p>
+
+      <h2>Errores frecuentes al trabajar melamina</h2>
+      <ol>
+        <li>Cortar con la hoja incorrecta, astillando el papel decorativo.</li>
+        <li>No sellar los cantos, dejando el núcleo expuesto a la humedad.</li>
+        <li>Usar tornillos comunes en vez de confirmat en uniones canto-a-canto.</li>
+        <li>No pretaladrar, astillando el tablero cerca de los bordes.</li>
+        <li>Mezclar planchas de distintos lotes, generando diferencias sutiles de color.</li>
+      </ol>
+      <p>Profundiza en cada uno en nuestro artículo <a href="/blog/errores-comunes-al-hacer-muebles-de-melamina">10 errores comunes al hacer muebles de melamina</a>.</p>
+
+      <h2>Cómo diseñar muebles en melamina</h2>
+      <p>
+        El diseño en melamina se beneficia de pensar en <strong>módulos estándar</strong> (30, 40, 45, 60 cm de ancho) en vez
+        de medidas únicas para cada espacio — esto reduce desperdicio de material y facilita reparaciones o ampliaciones
+        futuras. Define primero la función (qué guardará el mueble), luego la modulación, y por último el despiece detallado
+        de cada pieza.
+      </p>
+
+      <h2>Cómo calcular costos en proyectos de melamina</h2>
+      <p>
+        Un costeo realista suma: material (planchas + canto + tornillería, con 10-15% de margen por desperdicio), herrajes
+        (cotizados por unidad, no por metro cuadrado), mano de obra de corte/canteado/armado, y si corresponde, instalación
+        en el sitio del cliente. Consulta nuestra guía práctica <a href="/blog/como-calcular-material-para-un-closet">cómo calcular material para un closet</a> para un ejemplo numérico completo.
+      </p>
+
+      <h2>Cómo vender muebles de melamina</h2>
+      <p>
+        Si fabricas para clientes, algunos puntos que marcan la diferencia: fotografía bien tus proyectos terminados
+        (la melamina se ve muy bien en fotos con buena luz), ofrece 2-3 opciones de color/textura en vez de un catálogo
+        infinito (facilita la decisión del cliente), sé transparente sobre tiempos de fabricación, y construye un porfolio
+        de proyectos reales con medidas y materiales usados — genera mucha más confianza que solo fotos de catálogo del proveedor.
+      </p>
+    </div>
+
+    <AdSense slot="0000000021" format="rectangle" className="my-10" />
+
+    <FAQ items={faqItems} />
+
+    <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <a href="/materiales/melamina" class="btn-secondary justify-center">Ver ficha técnica resumen →</a>
+      <a href="/proyectos" class="btn-primary justify-center">Ver proyectos en melamina →</a>
+    </div>
+  </div>
+</BaseLayout>

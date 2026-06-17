@@ -1,154 +1,107 @@
 ---
 // src/components/Header.astro
 const navLinks = [
-  { href: '/',               label: 'Inicio' },
-  { href: '/manuales',       label: 'Manuales' },
-  { href: '/sobre-nosotros', label: 'Nosotros' },
-  { href: '/contacto',       label: 'Contacto' },
+  { href: '/',          label: 'Inicio' },
+  { href: '/aprende',   label: 'Aprende' },
+  { href: '/materiales',label: 'Materiales' },
+  { href: '/proyectos', label: 'Proyectos' },
+  { href: '/manuales',  label: 'Manuales' },
+  { href: '/contacto',  label: 'Contacto' },
 ];
 const currentPath = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
 ---
 
-<header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
-  <!-- Fondo con blur que aparece al hacer scroll -->
-  <div id="header-bg" class="absolute inset-0 opacity-0 transition-opacity duration-500"
-       style="background: rgba(2,12,27,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(100,255,218,0.08);">
-  </div>
-
-  <!-- Línea de acento superior -->
-  <div class="absolute top-0 left-0 right-0 h-[2px]"
-       style="background: linear-gradient(90deg, transparent 0%, #64ffda 40%, #06b6d4 60%, transparent 100%);">
-  </div>
+<header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background:var(--color-bark-950);border-bottom:1px solid transparent;">
+  <div id="header-shadow" class="absolute inset-0 transition-shadow duration-300" style="background:var(--color-bark-900);box-shadow:0 0 0 rgba(0,0,0,0);opacity:0;"></div>
 
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-18 py-4">
+    <div class="flex items-center justify-between h-[72px]">
 
       <!-- ── Logo ── -->
-      <a href="/" class="flex items-center gap-3 group" style="text-decoration:none">
-        <!-- Icono con efecto glow -->
-        <div class="relative">
-          <div class="w-9 h-9 rounded-lg flex items-center justify-center text-lg transition-all duration-300 group-hover:scale-110"
-               style="background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(100,255,218,0.1)); border: 1px solid rgba(100,255,218,0.3);">
-            🪚
-          </div>
-          <div class="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-               style="background: rgba(100,255,218,0.1); filter: blur(8px);">
-          </div>
+      <a href="/" class="flex items-center gap-3 group" style="text-decoration:none" aria-label="CarpinteríaPro, ir a inicio">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg transition-transform duration-300 group-hover:-rotate-6"
+             style="background:color-mix(in srgb, var(--color-wood-500) 12%, transparent);border:1px solid color-mix(in srgb, var(--color-wood-500) 30%, transparent);">
+          🪵
         </div>
-
         <div class="leading-none">
           <div class="flex items-baseline gap-1">
-            <span class="font-display text-lg font-black tracking-tight transition-all duration-300"
-                  style="color: #ecfeff; letter-spacing: -0.5px; font-size: ;">
+            <span class="font-display text-lg font-bold tracking-tight" style="color:var(--color-wood-100);">
               Carpintería
             </span>
-            <span class="font-display text-xl font-black"
-                  style="background: linear-gradient(135deg, #64ffda, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            <span class="font-display text-lg font-bold" style="color:var(--color-wood-500);">
               Pro
             </span>
           </div>
-          <p class="text-[9px] tracking-[3px] uppercase mt-0.5" style="color: rgba(100,255,218,0.5);">
-            Manuales & Guías
+          <p class="text-[9px] tracking-[3px] uppercase mt-0.5" style="color:var(--color-wood-400);">
+            Manuales &amp; Guías
           </p>
         </div>
       </a>
 
       <!-- ── Nav Desktop ── -->
-      <nav class="hidden md:flex items-center" style="gap: 2px;">
+      <nav class="hidden md:flex items-center gap-1" aria-label="Navegación principal">
         {navLinks.map(link => (
           <a
             href={link.href}
-            class="nav-link relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg group"
-            style={currentPath === link.href
-              ? 'color: #64ffda;'
-              : 'color: rgba(165,243,252,0.6);'}
+            class="nav-link relative px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200"
+            style={isActive(link.href) ? 'color:var(--color-wood-600); background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);' : 'color:var(--color-wood-300);'}
+            aria-current={isActive(link.href) ? 'page' : undefined}
           >
-            <!-- Indicador activo -->
-            {currentPath === link.href && (
-              <span class="absolute inset-0 rounded-lg"
-                    style="background: rgba(100,255,218,0.08); border: 1px solid rgba(100,255,218,0.2);">
-              </span>
-            )}
-            <!-- Hover background -->
-            <span class="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                  style="background: rgba(100,255,218,0.06);">
-            </span>
-            <span class="relative">{link.label}</span>
-            <!-- Underline activo -->
-            {currentPath === link.href && (
-              <span class="absolute bottom-1 left-4 right-4 h-[1px]"
-                    style="background: linear-gradient(90deg, transparent, #64ffda, transparent);">
-              </span>
-            )}
+            {link.label}
           </a>
         ))}
       </nav>
 
       <!-- ── CTA ── -->
       <div class="hidden md:flex items-center gap-3">
-        <!-- Badge de manuales -->
-        <span class="text-xs font-mono px-2 py-1 rounded"
-              style="color: rgba(100,255,218,0.6); background: rgba(100,255,218,0.06); border: 1px solid rgba(100,255,218,0.15);">
-          +50 manuales
+        <span class="text-xs font-semibold px-2.5 py-1 rounded-full" style="color:var(--color-wood-600);background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);">
+          +{12} manuales
         </span>
-
-        <a href="/manuales" class="cta-btn relative overflow-hidden px-5 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 group"
-           style="background: linear-gradient(135deg, #0891b2, #06b6d4); color: #fff; text-decoration: none;">
-          <!-- Shimmer effect -->
-          <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style="background: linear-gradient(135deg, #06b6d4, #64ffda);">
-          </span>
-          <!-- Glow -->
-          <span class="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-300 rounded-lg"
-                style="box-shadow: 0 0 20px rgba(6,182,212,0.6); filter: blur(4px);">
-          </span>
-          <span class="relative flex items-center gap-2">
-            Ver manuales
-            <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-            </svg>
-          </span>
+        <a href="/manuales" class="btn-primary !py-2.5 !px-5 !text-sm">
+          Ver manuales
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
         </a>
       </div>
 
       <!-- ── Mobile hamburger ── -->
       <button id="menu-btn"
-              class="md:hidden relative w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-lg transition-all duration-200"
-              style="border: 1px solid rgba(100,255,218,0.2); background: rgba(100,255,218,0.05);">
-        <span class="hamburger-line block w-5 h-[1.5px] rounded transition-all duration-300" style="background:#64ffda"></span>
-        <span class="hamburger-line block w-4 h-[1.5px] rounded transition-all duration-300" style="background:#64ffda; margin-left:-4px"></span>
-        <span class="hamburger-line block w-5 h-[1.5px] rounded transition-all duration-300" style="background:#64ffda"></span>
+              class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-lg transition-colors duration-200"
+              style="border:1px solid color-mix(in srgb, var(--color-wood-800) 70%, transparent);"
+              aria-expanded="false"
+              aria-controls="mobile-menu"
+              aria-label="Abrir menú de navegación">
+        <span class="hamburger-line block w-5 h-[1.5px] rounded transition-all duration-300" style="background:var(--color-wood-600)"></span>
+        <span class="hamburger-line block w-4 h-[1.5px] rounded transition-all duration-300 self-center" style="background:var(--color-wood-600)"></span>
+        <span class="hamburger-line block w-5 h-[1.5px] rounded transition-all duration-300" style="background:var(--color-wood-600)"></span>
       </button>
     </div>
 
     <!-- ── Mobile menu ── -->
-    <div id="mobile-menu"
-         class="md:hidden overflow-hidden transition-all duration-300"
-         style="max-height: 0;">
-      <div class="pb-4 pt-2" style="border-top: 1px solid rgba(100,255,218,0.1);">
+    <nav id="mobile-menu" class="md:hidden overflow-hidden transition-all duration-300" style="max-height:0;" aria-label="Navegación móvil">
+      <div class="pb-4 pt-2" style="border-top:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
         {navLinks.map((link, i) => (
           <a href={link.href}
-             class="flex items-center gap-3 px-3 py-3 rounded-lg mx-1 my-0.5 transition-all duration-200"
-             style={currentPath === link.href
-               ? 'color: #64ffda; background: rgba(100,255,218,0.08);'
-               : 'color: rgba(165,243,252,0.7);'}
+             class="flex items-center gap-3 px-3 py-3 rounded-lg mx-1 my-0.5 transition-colors duration-200"
+             style={isActive(link.href)
+               ? 'color:var(--color-wood-600); background:color-mix(in srgb, var(--color-wood-500) 10%, transparent); font-weight:700;'
+               : 'color:var(--color-wood-300);'}
+             aria-current={isActive(link.href) ? 'page' : undefined}
           >
-            <span class="text-xs font-mono" style="color: rgba(100,255,218,0.3);">0{i+1}</span>
+            <span class="text-xs font-mono" style="color:var(--color-wood-400);">0{i + 1}</span>
             <span class="text-sm font-medium">{link.label}</span>
-            {currentPath === link.href && (
-              <span class="ml-auto text-xs" style="color: #64ffda;">●</span>
-            )}
           </a>
         ))}
-        <div class="px-4 pt-3 mt-2" style="border-top: 1px solid rgba(100,255,218,0.08);">
-          <a href="/manuales"
-             class="flex items-center justify-center gap-2 w-full py-3 rounded-lg text-sm font-bold"
-             style="background: linear-gradient(135deg, #0891b2, #06b6d4); color: #fff; text-decoration: none;">
+        <div class="px-3 pt-3 mt-2" style="border-top:1px solid color-mix(in srgb, var(--color-wood-800) 50%, transparent);">
+          <a href="/manuales" class="btn-primary w-full justify-center">
             Ver todos los manuales →
           </a>
         </div>
       </div>
-    </div>
+    </nav>
   </div>
 </header>
 
@@ -156,37 +109,35 @@ const currentPath = Astro.url.pathname;
 <div class="h-[72px]"></div>
 
 <style>
-  .nav-link:hover {
-    color: #ecfeff !important;
-  }
+  .nav-link:hover { color: var(--color-wood-600) !important; }
+  #menu-btn[aria-expanded="true"] .hamburger-line:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  #menu-btn[aria-expanded="true"] .hamburger-line:nth-child(2) { opacity: 0; }
+  #menu-btn[aria-expanded="true"] .hamburger-line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 </style>
 
 <script>
-  // Scroll: aparece fondo del header
-  const header = document.getElementById('main-header');
-  const headerBg = document.getElementById('header-bg');
+  const headerShadow = document.getElementById('header-shadow');
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      headerBg!.style.opacity = '1';
+  const updateHeaderShadow = () => {
+    if (!headerShadow) return;
+    if (window.scrollY > 12) {
+      headerShadow.style.opacity = '1';
+      headerShadow.style.boxShadow = '0 4px 16px -8px rgba(42,33,24,0.18)';
     } else {
-      headerBg!.style.opacity = '0';
+      headerShadow.style.opacity = '0';
+      headerShadow.style.boxShadow = '0 0 0 rgba(0,0,0,0)';
     }
-  }, { passive: true });
+  };
+  updateHeaderShadow();
+  window.addEventListener('scroll', updateHeaderShadow, { passive: true });
 
-  // Mobile menu toggle con animación
   const btn = document.getElementById('menu-btn');
   const menu = document.getElementById('mobile-menu');
   let isOpen = false;
 
   btn?.addEventListener('click', () => {
     isOpen = !isOpen;
-    if (isOpen) {
-      menu!.style.maxHeight = menu!.scrollHeight + 'px';
-      btn!.style.background = 'rgba(100,255,218,0.12)';
-    } else {
-      menu!.style.maxHeight = '0';
-      btn!.style.background = 'rgba(100,255,218,0.05)';
-    }
+    btn.setAttribute('aria-expanded', String(isOpen));
+    if (menu) menu.style.maxHeight = isOpen ? menu.scrollHeight + 'px' : '0';
   });
 </script>

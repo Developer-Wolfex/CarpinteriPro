@@ -1,0 +1,36 @@
+---
+// src/components/FAQ.astro
+// Lista de preguntas frecuentes + FAQPage schema.org (solo si hay items).
+interface Item { pregunta: string; respuesta: string }
+interface Props { items: Item[]; titulo?: string }
+
+const { items, titulo = 'Preguntas frecuentes' } = Astro.props;
+
+const faqSchema = items.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map(item => ({
+    '@type': 'Question',
+    name: item.pregunta,
+    acceptedAnswer: { '@type': 'Answer', text: item.respuesta },
+  })),
+} : null;
+---
+
+{items.length > 0 && (
+  <section class="mt-12">
+    {faqSchema && <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+    <h2 class="font-display text-2xl font-bold mb-6" style="color:var(--color-wood-100);">{titulo}</h2>
+    <div class="space-y-3">
+      {items.map(item => (
+        <details class="group rounded-xl p-5" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+          <summary class="font-semibold cursor-pointer list-none flex items-center justify-between gap-3" style="color:var(--color-wood-200);">
+            {item.pregunta}
+            <span class="transition-transform group-open:rotate-45 flex-shrink-0" style="color:var(--color-wood-500);" aria-hidden="true">+</span>
+          </summary>
+          <p class="text-sm leading-relaxed mt-3" style="color:var(--color-wood-400);">{item.respuesta}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+)}

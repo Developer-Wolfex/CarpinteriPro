@@ -1,10 +1,47 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+const email = 'ventashot68@gmail.com';
 ---
-<BaseLayout title="DMCA - CarpinteríaPro" description="DMCA">
-  <h1>Política de Derechos de Autor (DMCA)</h1>
-  <p>Todo el contenido de CarpinteríaPro — textos, imágenes y guías —
-     es propiedad de CarpinteríaPro y está protegido por derechos de autor.</p>
-  <p>Para reportar una infracción: <a href="mailto:dmca@tucorreo.com">dmca@tucorreo.com</a></p>
+<BaseLayout
+  title="DMCA – CarpinteríaPro"
+  description="Política de derechos de autor (DMCA) de CarpinteríaPro."
+>
+  <!-- Breadcrumb -->
+  <div style="border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 50%, transparent); background:var(--color-bark-900);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <nav class="flex items-center gap-2 text-xs" style="color:var(--color-wood-400);" aria-label="Ruta de navegación">
+        <a href="/" style="color:var(--color-wood-400);">Inicio</a>
+        <span>/</span>
+        <span style="color:var(--color-wood-200);">DMCA</span>
+      </nav>
+    </div>
+  </div>
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[3px]"
+         style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent); border:1px solid color-mix(in srgb, var(--color-wood-500) 28%, transparent); color:var(--color-wood-600);">
+      🔒 Documento Legal
+    </div>
+
+    <h1 class="font-display font-black mb-6" style="font-size:clamp(30px,4vw,46px);color:var(--color-wood-100);letter-spacing:-1px;">
+      Política de Derechos de Autor (DMCA)
+    </h1>
+
+    <div class="space-y-5 text-sm leading-relaxed" style="color:var(--color-wood-300);">
+      <p>
+        Todo el contenido de <strong style="color:var(--color-wood-100);">CarpinteríaPro</strong> — textos, imágenes y guías —
+        es propiedad de CarpinteríaPro y está protegido por derechos de autor.
+      </p>
+      <p>
+        Si crees que algún contenido de este sitio infringe tus derechos de autor, puedes
+        enviarnos una notificación con los detalles de la infracción y te responderemos en
+        un plazo razonable.
+      </p>
+      <div class="p-6 rounded-2xl mt-4" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+        <p class="text-xs uppercase tracking-widest font-semibold mb-1" style="color:var(--color-wood-400);">Para reportar una infracción</p>
+        <a href={`mailto:${email}`} style="color:var(--color-wood-500); text-decoration:underline;">{email}</a>
+      </div>
+    </div>
+  </div>
 </BaseLayout>

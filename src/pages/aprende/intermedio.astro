@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import LearningPath from '../../components/LearningPath.astro';
+import AdSense from '../../components/AdSense.astro';
+
+const temas = [
+  { titulo: 'Diseño de muebles simples', texto: 'Pasar de "copiar un modelo" a definir tú mismo proporciones, función y medidas de un mueble nuevo.' },
+  { titulo: 'Cálculo de medidas', texto: 'Trabajar siempre con medidas interiores reales, restando el grosor de cada tablero — el error más común al subir de nivel.' },
+  { titulo: 'Optimización de tableros', texto: 'Acomodar el despiece sobre la plancha para minimizar desperdicio, considerando dirección de veta si aplica.' },
+  { titulo: 'Estructuras más firmes', texto: 'Refuerzos, travesaños y escuadras metálicas para muebles que antes se sentían "flojos".' },
+  { titulo: 'Instalación de bisagras', texto: 'Fresado de 35mm, regulación en 3 ejes y elección entre bisagra estándar, de medio codo o de codo completo.' },
+  { titulo: 'Correderas telescópicas', texto: 'Diferencia entre corredera de rodillo, de bolas y de cierre suave — y cuándo vale la pena cada una.' },
+  { titulo: 'Diseño de closets y muebles modulares', texto: 'Pensar en módulos combinables en vez de un mueble único hecho a medida exacta del espacio.' },
+  { titulo: 'Modulación', texto: 'Anchos estándar (30/40/45/60cm) que agilizan fabricación, presupuesto y futuras ampliaciones.' },
+  { titulo: 'Despiece', texto: 'Lista detallada de cada pieza con medidas exactas, lista para cortar sin improvisar sobre la marcha.' },
+  { titulo: 'Presupuestos básicos', texto: 'Sumar material + herrajes + un margen de desperdicio — la base de cualquier cotización seria.' },
+  { titulo: 'Planeación de fabricación', texto: 'Ordenar el proceso: cortar todo, cantear todo, perforar todo, armar — por lotes, no pieza por pieza.' },
+];
+---
+
+<BaseLayout
+  title="Carpintería Intermedia: Diseño, Modulación y Presupuestos"
+  description="Diseño de muebles, cálculo de medidas, optimización de tableros, modulación, despiece y presupuestos básicos."
+  keywords="carpinteria intermedia, diseño de muebles modulares, como calcular despiece de muebles"
+>
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Aprende', href: '/aprende' }, { label: 'Intermedio' }]} />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <span class="badge-category mb-4 inline-block">🟠 Nivel Intermedio</span>
+    <h1 class="font-display text-4xl font-black leading-tight mb-5" style="color:var(--color-wood-100);">
+      Carpintería Intermedia: de armar a diseñar
+    </h1>
+    <p class="text-lg leading-relaxed mb-10" style="color:var(--color-wood-300);">
+      En este nivel dejas de seguir instrucciones al pie de la letra y empiezas a diseñar tus propios muebles:
+      modulación, despiece, herrajes de calidad y presupuestos reales.
+    </p>
+
+    <AdSense slot="0000000032" format="horizontal" className="mb-10" />
+
+    <div class="space-y-4">
+      {temas.map((t, i) => (
+        <div class="rounded-xl p-5 flex gap-4" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:color-mix(in srgb, var(--color-wood-500) 14%, transparent); color:var(--color-wood-600);">
+            {i + 1}
+          </div>
+          <div>
+            <h2 class="font-bold mb-1" style="color:var(--color-wood-200);">{t.titulo}</h2>
+            <p class="text-sm leading-relaxed" style="color:var(--color-wood-400);">{t.texto}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 rounded-2xl p-6" style="background:color-mix(in srgb, var(--color-wood-500) 8%, var(--color-bark-900)); border:1px solid color-mix(in srgb, var(--color-wood-500) 22%, transparent);">
+      <p class="font-bold mb-2" style="color:var(--color-wood-100);">Practica lo aprendido</p>
+      <p class="text-sm mb-4" style="color:var(--color-wood-400);">Estos proyectos están pensados exactamente para nivel intermedio:</p>
+      <div class="flex flex-wrap gap-3">
+        <a href="/proyectos/mueble-tv-flotante-melamina" class="btn-secondary">Mueble de TV flotante →</a>
+        <a href="/proyectos/librero-modular-mdf" class="btn-secondary">Librero modular en MDF →</a>
+        <a href="/blog/como-calcular-material-para-un-closet" class="btn-secondary">Cómo calcular material →</a>
+      </div>
+    </div>
+
+    <LearningPath
+      anterior={{ label: 'Volver a Nivel Básico', href: '/aprende/basico' }}
+      siguiente={{ label: 'Continuar a Nivel Avanzado', href: '/aprende/avanzado' }}
+    />
+  </div>
+</BaseLayout>

@@ -1,0 +1,51 @@
+---
+// src/pages/proyectos/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import AdSense from '../../components/AdSense.astro';
+import { getCollection } from 'astro:content';
+
+const proyectos = await getCollection('proyectos');
+const niveles = ['Básico', 'Intermedio', 'Avanzado'] as const;
+---
+
+<BaseLayout
+  title="Proyectos Prácticos de Carpintería – Básico a Avanzado"
+  description="Proyectos reales de carpintería con materiales, herramientas, pasos, errores comunes, tiempo y dificultad. De nivel básico a avanzado."
+  keywords="proyectos de carpinteria, proyectos de muebles paso a paso, ideas de muebles para hacer"
+>
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Proyectos' }]} />
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <p class="eyebrow mb-3">Aprende haciendo</p>
+    <h1 class="font-display text-4xl font-bold mb-5" style="color:var(--color-wood-100);">
+      Proyectos Prácticos de Carpintería
+    </h1>
+    <p class="text-lg leading-relaxed mb-10" style="color:var(--color-wood-300); max-width:680px;">
+      Cada proyecto incluye lista de materiales y herramientas, pasos numerados, errores comunes, tiempo estimado y nivel de dificultad —
+      todo lo que necesitas antes de empezar a cortar.
+    </p>
+
+    <AdSense slot="0000000013" format="horizontal" className="mb-10" />
+
+    {niveles.map((nivel, i) => {
+      const delNivel = proyectos.filter(p => p.data.nivel === nivel);
+      if (delNivel.length === 0) return null;
+      return (
+        <>
+          <section class="mb-12">
+            <h2 class="section-title mb-6 flex items-center gap-3">
+              <span aria-hidden="true">{nivel === 'Básico' ? '🟢' : nivel === 'Intermedio' ? '🟠' : '🔴'}</span>
+              Nivel {nivel}
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {delNivel.map(p => <ProjectCard proyecto={p} />)}
+            </div>
+          </section>
+          {i === 1 && <AdSense slot="0000000014" format="horizontal" className="mb-12" />}
+        </>
+      );
+    })}
+  </div>
+</BaseLayout>

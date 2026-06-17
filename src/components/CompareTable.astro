@@ -1,0 +1,33 @@
+---
+// src/components/CompareTable.astro
+// Ficha comparativa reutilizable — usada en /materiales para comparar todos los materiales de un vistazo.
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { materiales: CollectionEntry<'materiales'>[] }
+const { materiales } = Astro.props;
+---
+
+<div class="overflow-x-auto rounded-2xl" style="border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent); box-shadow:var(--shadow-soft);">
+  <table class="w-full text-sm" style="background:var(--color-bark-900);">
+    <thead>
+      <tr style="background:color-mix(in srgb, var(--color-wood-500) 8%, transparent); border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+        <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Material</th>
+        <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Costo aprox.</th>
+        <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Resistencia</th>
+        <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Mantenimiento</th>
+      </tr>
+    </thead>
+    <tbody>
+      {materiales.map((m, i) => (
+        <tr style={`border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 40%, transparent); background:${i % 2 === 0 ? 'transparent' : 'color-mix(in srgb, var(--color-wood-500) 3%, transparent)'}`}>
+          <td class="p-4 font-bold">
+            <a href={`/materiales/${m.id}`} style="color:var(--color-wood-200); text-decoration:underline;">{m.data.titulo}</a>
+          </td>
+          <td class="p-4" style="color:var(--color-wood-400);">{m.data.costoAprox}</td>
+          <td class="p-4" style="color:var(--color-wood-400);">{m.data.resistencia}</td>
+          <td class="p-4" style="color:var(--color-wood-400);">{m.data.mantenimiento}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

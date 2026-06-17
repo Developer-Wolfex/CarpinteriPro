@@ -1,0 +1,97 @@
+---
+// src/pages/aprende/index.astro — Página de introducción / hub educativo
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSense from '../../components/AdSense.astro';
+---
+
+<BaseLayout
+  title="Aprende Carpintería desde Cero – Ruta Completa"
+  description="Qué es la carpintería, tipos, qué aprenderás en este sitio y la ruta de aprendizaje recomendada de básico a avanzado."
+  keywords="aprender carpinteria desde cero, que es la carpinteria, tipos de carpinteria, curso de carpinteria gratis"
+>
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Aprende' }]} />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <p class="eyebrow mb-3">Empieza aquí</p>
+    <h1 class="font-display text-4xl font-black leading-tight mb-5" style="color:var(--color-wood-100);">
+      Aprende carpintería desde cero
+    </h1>
+    <p class="text-lg leading-relaxed mb-10" style="color:var(--color-wood-300);">
+      Esta página es el punto de partida de todo el sitio: qué es la carpintería, qué tipos existen, qué vas a aprender
+      aquí y en qué orden conviene hacerlo.
+    </p>
+
+    <div class="prose max-w-none prose-headings:font-display prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h3:text-lg prose-h3:mt-6 prose-table:w-full prose-table:text-sm"
+         style="color:var(--color-wood-300); --tw-prose-headings:var(--color-wood-100); --tw-prose-body:var(--color-wood-300); --tw-prose-bold:var(--color-wood-200); --tw-prose-th-borders:var(--color-wood-800); --tw-prose-td-borders:var(--color-wood-800);">
+
+      <h2>¿Qué es la carpintería?</h2>
+      <p>
+        La carpintería es el oficio y el arte de transformar madera y materiales derivados (melamina, MDF, triplay, etc.)
+        en objetos útiles: muebles, estructuras, puertas, acabados de interior. Combina conocimiento técnico (materiales,
+        herramientas, medidas), habilidad manual (corte, ensamble, acabado) y, en su nivel más avanzado, diseño y gestión
+        de proyectos completos.
+      </p>
+
+      <h2>Tipos de carpintería</h2>
+      <table>
+        <thead><tr><th>Tipo</th><th>Enfoque</th></tr></thead>
+        <tbody>
+          <tr><td>Carpintería de banco / mueblería</td><td>Muebles de madera maciza, técnicas tradicionales de unión</td></tr>
+          <tr><td>Carpintería en melamina / modular</td><td>Cocinas, closets y muebles de producción en serie con tableros</td></tr>
+          <tr><td>Carpintería de obra / estructural</td><td>Techos, encofrados, estructuras de construcción</td></tr>
+          <tr><td>Ebanistería / carpintería fina</td><td>Muebles de alto detalle, tallado, marquetería, restauración</td></tr>
+          <tr><td>Carpintería de exterior</td><td>Decks, pérgolas, mobiliario de jardín con maderas tratadas</td></tr>
+        </tbody>
+      </table>
+      <p>Este sitio se enfoca principalmente en <strong>carpintería de mueblería y modular</strong> (madera maciza, melamina, MDF), que es donde está la mayor demanda práctica y comercial hoy.</p>
+
+      <h2>¿Qué vas a aprender en este sitio?</h2>
+      <ul>
+        <li>A identificar y elegir el material correcto para cada proyecto (ver <a href="/materiales">Materiales</a>).</li>
+        <li>Las habilidades básicas de corte, unión, lijado y acabado (ver <a href="/aprende/basico">Ruta Básica</a>).</li>
+        <li>Diseño, modulación y cálculo de presupuestos (ver <a href="/aprende/intermedio">Ruta Intermedia</a>).</li>
+        <li>Fabricación profesional, costeo y manejo de clientes (ver <a href="/aprende/avanzado">Ruta Avanzada</a>).</li>
+        <li>Proyectos reales paso a paso para practicar lo aprendido (ver <a href="/proyectos">Proyectos</a>).</li>
+      </ul>
+
+      <h2>Cómo está organizado el sitio</h2>
+      <p>El contenido se organiza en clústeres temáticos que se enlazan entre sí:</p>
+      <ul>
+        <li><strong>Materiales</strong>: fichas técnicas de cada tablero y material (qué es, costo, pros/contras).</li>
+        <li><strong>Melamina</strong>: guía especial dedicada al material más usado en mobiliario modular.</li>
+        <li><strong>Rutas de aprendizaje</strong>: básico, intermedio y avanzado, como un curso progresivo.</li>
+        <li><strong>Proyectos prácticos</strong>: construcciones reales con pasos, errores y consejos.</li>
+        <li><strong>Manuales</strong>: guías detalladas de muebles específicos.</li>
+        <li><strong>Blog</strong>: artículos puntuales para resolver dudas concretas.</li>
+        <li><strong>Glosario y Recursos</strong>: referencia rápida de términos y tablas útiles.</li>
+      </ul>
+
+      <h2>Diferencia rápida entre materiales</h2>
+      <p>
+        Antes de avanzar, es útil tener clara la diferencia básica: la <strong>madera maciza</strong> es 100% natural y la más
+        resistente pero cara; la <strong>melamina</strong> es un tablero ya recubierto, lista para usar y económica; el
+        <strong>MDF</strong> es un tablero crudo ideal para pintar o tallar bordes; el <strong>triplay</strong> son láminas
+        de madera cruzadas, muy resistente a la flexión; y el <strong>OSB</strong> es un tablero estructural de virutas,
+        económico y de estética industrial. Profundiza en cada uno en la sección de <a href="/materiales">Materiales</a>.
+      </p>
+    </div>
+
+    <AdSense slot="0000000030" format="horizontal" className="my-10" />
+
+    <h2 class="font-display text-2xl font-bold mb-6" style="color:var(--color-wood-100);">Tu ruta de aprendizaje recomendada</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      {[
+        { href: '/aprende/basico', emoji: '🟢', nivel: 'Básico', texto: 'Herramientas, seguridad, medición, cortes y armado simple.' },
+        { href: '/aprende/intermedio', emoji: '🟠', nivel: 'Intermedio', texto: 'Diseño de muebles, modulación, presupuestos y herrajes.' },
+        { href: '/aprende/avanzado', emoji: '🔴', nivel: 'Avanzado', texto: 'Cocinas, closets, costeo profesional y trato con clientes.' },
+      ].map(n => (
+        <a href={n.href} class="card-manual block p-6 text-center">
+          <div class="text-3xl mb-3" aria-hidden="true">{n.emoji}</div>
+          <h3 class="font-display font-bold text-lg mb-2" style="color:var(--color-wood-100);">{n.nivel}</h3>
+          <p class="text-sm" style="color:var(--color-wood-400);">{n.texto}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

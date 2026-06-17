@@ -17,12 +17,12 @@ const pais = 'Perú';                               // TODO: tu país
 >
 
   <!-- Breadcrumb -->
-  <div class="border-b border-(--color-wood-800)/20" style="background:rgba(2,12,27,0.5)">
+  <div style="border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 50%, transparent); background:var(--color-bark-900);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-      <nav class="flex items-center gap-2 text-xs" style="color:rgba(100,255,218,0.4)">
-        <a href="/" style="color:rgba(100,255,218,0.4)" class="hover:text-(--color-wood-300) transition-colors">Inicio</a>
+      <nav class="flex items-center gap-2 text-xs" style="color:var(--color-wood-400);" aria-label="Ruta de navegación">
+        <a href="/" style="color:var(--color-wood-400);">Inicio</a>
         <span>/</span>
-        <span style="color:rgba(165,243,252,0.7)">Política de Privacidad</span>
+        <span style="color:var(--color-wood-200);">Política de Privacidad</span>
       </nav>
     </div>
   </div>
@@ -31,25 +31,25 @@ const pais = 'Perú';                               // TODO: tu país
 
     <!-- Header -->
     <div class="mb-12">
-      <div class="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-full font-mono text-xs font-bold uppercase tracking-[3px]"
-           style="background:rgba(100,255,218,0.07);border:1px solid rgba(100,255,218,0.2);color:#64ffda;">
+      <div class="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[3px]"
+           style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent); border:1px solid color-mix(in srgb, var(--color-wood-500) 28%, transparent); color:var(--color-wood-600);">
         🔒 Documento Legal
       </div>
-      <h1 class="font-display font-black mb-4" style="font-size:clamp(32px,4vw,52px);color:#ecfeff;letter-spacing:-1px;">
+      <h1 class="font-display font-black mb-4" style="font-size:clamp(32px,4vw,52px);color:var(--color-wood-100);letter-spacing:-1px;">
         Política de Privacidad
       </h1>
-      <p class="text-sm font-mono" style="color:rgba(100,255,218,0.45);">
+      <p class="text-sm" style="color:var(--color-wood-400);">
         Última actualización: {fechaActualizacion}
       </p>
     </div>
 
     <!-- Contenido -->
-    <div class="space-y-10" style="color:rgba(165,243,252,0.75);">
+    <div class="space-y-10" style="color:var(--color-wood-300);">
 
       <!-- Intro -->
-      <div class="p-6 rounded-2xl" style="background:rgba(6,182,212,0.06);border:1px solid rgba(100,255,218,0.15);">
+      <div class="p-6 rounded-2xl" style="background:color-mix(in srgb, var(--color-wood-500) 6%, transparent); border:1px solid color-mix(in srgb, var(--color-wood-500) 18%, transparent);">
         <p class="text-sm leading-relaxed">
-          En <strong style="color:#ecfeff">CarpinteríaPro</strong> (<strong style="color:#a5f3fc">{dominio}</strong>)
+          En <strong style="color:var(--color-wood-100);">CarpinteríaPro</strong> (<strong style="color:var(--color-wood-200);">{dominio}</strong>)
           nos comprometemos a proteger tu privacidad. Esta política explica qué información recopilamos,
           cómo la usamos y cuáles son tus derechos. Al usar nuestro sitio web, aceptas los términos
           descritos en este documento.
@@ -58,30 +58,21 @@ const pais = 'Perú';                               // TODO: tu país
 
       <!-- Sección 1 -->
       <section>
-        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:#ecfeff;">
-          <span class="text-lg font-mono px-2 py-0.5 rounded" style="background:rgba(100,255,218,0.1);color:#64ffda;font-size:20px;">01</span>
+        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:var(--color-wood-100);">
+          <span class="text-lg px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);color:var(--color-wood-600);font-size:20px;">01</span>
           Información que recopilamos
         </h2>
         <div class="space-y-4 text-sm leading-relaxed">
           <p>Podemos recopilar los siguientes tipos de información:</p>
           <div class="space-y-3 ml-4">
             {[
-              {
-                titulo: 'Información de uso',
-                texto: 'Páginas visitadas, tiempo en el sitio, enlaces en los que haces clic, dirección IP, tipo de navegador y sistema operativo. Esta información se recopila automáticamente mediante cookies y tecnologías similares.',
-              },
-              {
-                titulo: 'Información que nos proporcionas',
-                texto: 'Si nos contactas por correo electrónico, recopilamos tu nombre y dirección de email para responderte.',
-              },
-              {
-                titulo: 'Cookies y tecnologías de seguimiento',
-                texto: 'Usamos cookies propias y de terceros (como Google Analytics y Google AdSense) para mejorar la experiencia del sitio y mostrar publicidad relevante.',
-              },
+              { titulo: 'Información de uso', texto: 'Páginas visitadas, tiempo en el sitio, enlaces en los que haces clic, dirección IP, tipo de navegador y sistema operativo. Esta información se recopila automáticamente mediante cookies y tecnologías similares.' },
+              { titulo: 'Información que nos proporcionas', texto: 'Si nos contactas por correo electrónico, recopilamos tu nombre y dirección de email para responderte.' },
+              { titulo: 'Cookies y tecnologías de seguimiento', texto: 'Usamos cookies propias y de terceros (como Google Analytics y Google AdSense) para mejorar la experiencia del sitio y mostrar publicidad relevante.' },
             ].map(item => (
-              <div class="p-4 rounded-xl" style="background:var(--color-bark-900);border:1px solid rgba(21,94,117,0.3);">
-                <h3 class="font-bold mb-1" style="color:#a5f3fc;">• {item.titulo}</h3>
-                <p style="color:rgba(165,243,252,0.65);">{item.texto}</p>
+              <div class="p-4 rounded-xl" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+                <h3 class="font-bold mb-1" style="color:var(--color-wood-200);">• {item.titulo}</h3>
+                <p style="color:var(--color-wood-400);">{item.texto}</p>
               </div>
             ))}
           </div>
@@ -90,8 +81,8 @@ const pais = 'Perú';                               // TODO: tu país
 
       <!-- Sección 2 -->
       <section>
-        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:#ecfeff;">
-          <span class="text-lg font-mono px-2 py-0.5 rounded" style="background:rgba(100,255,218,0.1);color:#64ffda;font-size:20px;">02</span>
+        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:var(--color-wood-100);">
+          <span class="text-lg px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);color:var(--color-wood-600);font-size:20px;">02</span>
           Cómo usamos tu información
         </h2>
         <div class="text-sm leading-relaxed space-y-3">
@@ -105,28 +96,28 @@ const pais = 'Perú';                               // TODO: tu país
               'Cumplir con obligaciones legales aplicables.',
             ].map(item => (
               <li class="flex items-start gap-2">
-                <span style="color:#64ffda;margin-top:2px;flex-shrink:0;">→</span>
-                <span style="color:rgba(165,243,252,0.7);">{item}</span>
+                <span style="color:var(--color-wood-500);margin-top:2px;flex-shrink:0;">→</span>
+                <span style="color:var(--color-wood-400);">{item}</span>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      <!-- Sección 3 — Google AdSense (CRÍTICA para aprobación) -->
+      <!-- Sección 3 — Google AdSense -->
       <section>
-        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:#ecfeff;">
-          <span class="text-lg font-mono px-2 py-0.5 rounded" style="background:rgba(100,255,218,0.1);color:#64ffda;font-size:20px;">03</span>
+        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:var(--color-wood-100);">
+          <span class="text-lg px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);color:var(--color-wood-600);font-size:20px;">03</span>
           Publicidad y Google AdSense
         </h2>
-        <div class="p-5 rounded-xl mb-4" style="background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.2);">
-          <p class="text-sm leading-relaxed" style="color:rgba(251,191,36,0.8);">
+        <div class="p-5 rounded-xl mb-4" style="background:color-mix(in srgb, #b58a2e 8%, transparent); border:1px solid color-mix(in srgb, #b58a2e 22%, transparent);">
+          <p class="text-sm leading-relaxed" style="color:#8a6a23;">
             ⚠️ Esta sección es requerida por Google AdSense para la aprobación de tu sitio.
           </p>
         </div>
         <div class="text-sm leading-relaxed space-y-4">
           <p>
-            Este sitio web utiliza <strong style="color:#a5f3fc;">Google AdSense</strong>, un servicio de publicidad de Google LLC,
+            Este sitio web utiliza <strong style="color:var(--color-wood-200);">Google AdSense</strong>, un servicio de publicidad de Google LLC,
             para mostrar anuncios. Google AdSense utiliza cookies para mostrar anuncios basados en
             las visitas anteriores del usuario a este sitio web y a otros sitios en Internet.
           </p>
@@ -135,22 +126,19 @@ const pais = 'Perú';                               // TODO: tu país
             mostrar anuncios basados en la visita del usuario a este sitio o a otros sitios en Internet.
           </p>
           <p>
-            Los usuarios pueden <strong style="color:#a5f3fc;">inhabilitar la publicidad personalizada</strong> accediendo a
-            <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener"
-               style="color:#64ffda;text-decoration:underline;">
+            Los usuarios pueden <strong style="color:var(--color-wood-200);">inhabilitar la publicidad personalizada</strong> accediendo a
+            <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener" style="color:var(--color-wood-500);text-decoration:underline;">
               Configuración de anuncios de Google
             </a>.
             También pueden visitar
-            <a href="https://www.aboutads.info" target="_blank" rel="noopener"
-               style="color:#64ffda;text-decoration:underline;">
+            <a href="https://www.aboutads.info" target="_blank" rel="noopener" style="color:var(--color-wood-500);text-decoration:underline;">
               www.aboutads.info
             </a>
             para inhabilitar el uso de cookies de publicidad personalizada por parte de proveedores terceros.
           </p>
           <p>
             Para más información sobre cómo Google usa los datos, visita:
-            <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener"
-               style="color:#64ffda;text-decoration:underline;">
+            <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener" style="color:var(--color-wood-500);text-decoration:underline;">
               Cómo usa Google los datos cuando usas sitios o aplicaciones de nuestros socios
             </a>.
           </p>
@@ -159,8 +147,8 @@ const pais = 'Perú';                               // TODO: tu país
 
       <!-- Sección 4 — Cookies -->
       <section>
-        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:#ecfeff;">
-          <span class="text-lg font-mono px-2 py-0.5 rounded" style="background:rgba(100,255,218,0.1);color:#64ffda;font-size:20px;">04</span>
+        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:var(--color-wood-100);">
+          <span class="text-lg px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);color:var(--color-wood-600);font-size:20px;">04</span>
           Cookies
         </h2>
         <div class="text-sm leading-relaxed space-y-4">
@@ -168,13 +156,13 @@ const pais = 'Perú';                               // TODO: tu país
             Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas
             un sitio web. Usamos los siguientes tipos de cookies:
           </p>
-          <div class="overflow-x-auto rounded-xl" style="border:1px solid rgba(21,94,117,0.3);">
+          <div class="overflow-x-auto rounded-xl" style="border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
             <table class="w-full text-xs">
               <thead>
-                <tr style="background:rgba(6,182,212,0.1);border-bottom:1px solid rgba(21,94,117,0.3);">
-                  <th class="text-left p-4 font-bold" style="color:#64ffda;">Tipo</th>
-                  <th class="text-left p-4 font-bold" style="color:#64ffda;">Proveedor</th>
-                  <th class="text-left p-4 font-bold" style="color:#64ffda;">Propósito</th>
+                <tr style="background:color-mix(in srgb, var(--color-wood-500) 8%, transparent); border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+                  <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Tipo</th>
+                  <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Proveedor</th>
+                  <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Propósito</th>
                 </tr>
               </thead>
               <tbody>
@@ -183,10 +171,10 @@ const pais = 'Perú';                               // TODO: tu país
                   { tipo: 'Publicidad', proveedor: 'Google AdSense', proposito: 'Mostrar anuncios relevantes y personalizados.' },
                   { tipo: 'Funcionales', proveedor: 'Propias', proposito: 'Recordar preferencias de navegación.' },
                 ].map((row, i) => (
-                  <tr style={`border-bottom:1px solid rgba(21,94,117,0.2);background:${i % 2 === 0 ? 'transparent' : 'rgba(6,182,212,0.03)'}`}>
-                    <td class="p-4 font-bold" style="color:#a5f3fc;">{row.tipo}</td>
-                    <td class="p-4" style="color:rgba(165,243,252,0.65);">{row.proveedor}</td>
-                    <td class="p-4" style="color:rgba(165,243,252,0.65);">{row.proposito}</td>
+                  <tr style={`border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 40%, transparent); background:${i % 2 === 0 ? 'transparent' : 'color-mix(in srgb, var(--color-wood-500) 3%, transparent)'}`}>
+                    <td class="p-4 font-bold" style="color:var(--color-wood-200);">{row.tipo}</td>
+                    <td class="p-4" style="color:var(--color-wood-400);">{row.proveedor}</td>
+                    <td class="p-4" style="color:var(--color-wood-400);">{row.proposito}</td>
                   </tr>
                 ))}
               </tbody>
@@ -201,14 +189,12 @@ const pais = 'Perú';                               // TODO: tu país
 
       <!-- Sección 5 -->
       <section>
-        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:#ecfeff;">
-          <span class="text-lg font-mono px-2 py-0.5 rounded" style="background:rgba(100,255,218,0.1);color:#64ffda;font-size:20px;">05</span>
+        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:var(--color-wood-100);">
+          <span class="text-lg px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);color:var(--color-wood-600);font-size:20px;">05</span>
           Compartir información con terceros
         </h2>
         <div class="text-sm leading-relaxed space-y-3">
-          <p>
-            <strong style="color:#ecfeff;">No vendemos, alquilamos ni comercializamos</strong> tu información personal a terceros.
-          </p>
+          <p><strong style="color:var(--color-wood-100);">No vendemos, alquilamos ni comercializamos</strong> tu información personal a terceros.</p>
           <p>Podemos compartir información con:</p>
           <ul class="space-y-2 ml-4">
             {[
@@ -217,8 +203,8 @@ const pais = 'Perú';                               // TODO: tu país
               'Autoridades legales cuando sea requerido por ley.',
             ].map(item => (
               <li class="flex items-start gap-2">
-                <span style="color:#64ffda;margin-top:2px;flex-shrink:0;">→</span>
-                <span style="color:rgba(165,243,252,0.7);">{item}</span>
+                <span style="color:var(--color-wood-500);margin-top:2px;flex-shrink:0;">→</span>
+                <span style="color:var(--color-wood-400);">{item}</span>
               </li>
             ))}
           </ul>
@@ -227,8 +213,8 @@ const pais = 'Perú';                               // TODO: tu país
 
       <!-- Sección 6 -->
       <section>
-        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:#ecfeff;">
-          <span class="text-lg font-mono px-2 py-0.5 rounded" style="background:rgba(100,255,218,0.1);color:#64ffda;font-size:20px;">06</span>
+        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:var(--color-wood-100);">
+          <span class="text-lg px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);color:var(--color-wood-600);font-size:20px;">06</span>
           Tus derechos
         </h2>
         <div class="text-sm leading-relaxed space-y-3">
@@ -240,26 +226,26 @@ const pais = 'Perú';                               // TODO: tu país
               { icon: '🗑️', titulo: 'Eliminación', texto: 'Solicitar que eliminemos tus datos personales.' },
               { icon: '🚫', titulo: 'Oposición', texto: 'Oponerte al procesamiento de tus datos para publicidad.' },
             ].map(d => (
-              <div class="p-4 rounded-xl flex gap-3" style="background:var(--color-bark-900);border:1px solid rgba(21,94,117,0.3);">
-                <span class="text-xl flex-shrink-0">{d.icon}</span>
+              <div class="p-4 rounded-xl flex gap-3" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+                <span class="text-xl flex-shrink-0" aria-hidden="true">{d.icon}</span>
                 <div>
-                  <h3 class="font-bold text-xs mb-1" style="color:#a5f3fc;">{d.titulo}</h3>
-                  <p class="text-xs" style="color:rgba(165,243,252,0.6);">{d.texto}</p>
+                  <h3 class="font-bold text-xs mb-1" style="color:var(--color-wood-200);">{d.titulo}</h3>
+                  <p class="text-xs" style="color:var(--color-wood-400);">{d.texto}</p>
                 </div>
               </div>
             ))}
           </div>
           <p>
             Para ejercer cualquiera de estos derechos, contáctanos en:
-            <a href={`mailto:${email}`} style="color:#64ffda;text-decoration:underline;">{email}</a>
+            <a href={`mailto:${email}`} style="color:var(--color-wood-500);text-decoration:underline;">{email}</a>
           </p>
         </div>
       </section>
 
       <!-- Sección 7 -->
       <section>
-        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:#ecfeff;">
-          <span class="text-lg font-mono px-2 py-0.5 rounded" style="background:rgba(100,255,218,0.1);color:#64ffda;font-size:20px;">07</span>
+        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:var(--color-wood-100);">
+          <span class="text-lg px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);color:var(--color-wood-600);font-size:20px;">07</span>
           Seguridad de datos
         </h2>
         <p class="text-sm leading-relaxed">
@@ -271,21 +257,21 @@ const pais = 'Perú';                               // TODO: tu país
 
       <!-- Sección 8 -->
       <section>
-        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:#ecfeff;">
-          <span class="text-lg font-mono px-2 py-0.5 rounded" style="background:rgba(100,255,218,0.1);color:#64ffda;font-size:20px;">08</span>
+        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:var(--color-wood-100);">
+          <span class="text-lg px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);color:var(--color-wood-600);font-size:20px;">08</span>
           Menores de edad
         </h2>
         <p class="text-sm leading-relaxed">
           Este sitio web no está dirigido a menores de 13 años. No recopilamos conscientemente
           información personal de menores. Si eres padre o tutor y crees que tu hijo nos ha
-          proporcionado información, contáctanos en <a href={`mailto:${email}`} style="color:#64ffda;text-decoration:underline;">{email}</a>.
+          proporcionado información, contáctanos en <a href={`mailto:${email}`} style="color:var(--color-wood-500);text-decoration:underline;">{email}</a>.
         </p>
       </section>
 
       <!-- Sección 9 -->
       <section>
-        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:#ecfeff;">
-          <span class="text-lg font-mono px-2 py-0.5 rounded" style="background:rgba(100,255,218,0.1);color:#64ffda;font-size:20px;">09</span>
+        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:var(--color-wood-100);">
+          <span class="text-lg px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);color:var(--color-wood-600);font-size:20px;">09</span>
           Cambios a esta política
         </h2>
         <p class="text-sm leading-relaxed">
@@ -298,38 +284,38 @@ const pais = 'Perú';                               // TODO: tu país
 
       <!-- Sección 10 — Contacto -->
       <section>
-        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:#ecfeff;">
-          <span class="text-lg font-mono px-2 py-0.5 rounded" style="background:rgba(100,255,218,0.1);color:#64ffda;font-size:20px;">10</span>
+        <h2 class="font-display font-bold text-2xl mb-4 flex items-center gap-3" style="color:var(--color-wood-100);">
+          <span class="text-lg px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-wood-500) 10%, transparent);color:var(--color-wood-600);font-size:20px;">10</span>
           Contacto
         </h2>
-        <div class="p-6 rounded-2xl" style="background:var(--color-bark-900);border:1px solid rgba(100,255,218,0.15);">
+        <div class="p-6 rounded-2xl" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
           <p class="text-sm leading-relaxed mb-4">
             Si tienes preguntas sobre esta Política de Privacidad o sobre cómo manejamos tus datos,
             puedes contactarnos:
           </p>
           <div class="space-y-2 text-sm">
             <div class="flex items-center gap-3">
-              <span style="color:#64ffda;">📧</span>
-              <span style="color:rgba(165,243,252,0.8);">Email:</span>
-              <a href={`mailto:${email}`} style="color:#64ffda;text-decoration:underline;">{email}</a>
+              <span style="color:var(--color-wood-500);" aria-hidden="true">📧</span>
+              <span style="color:var(--color-wood-300);">Email:</span>
+              <a href={`mailto:${email}`} style="color:var(--color-wood-500);text-decoration:underline;">{email}</a>
             </div>
             <div class="flex items-center gap-3">
-              <span style="color:#64ffda;">🌐</span>
-              <span style="color:rgba(165,243,252,0.8);">Sitio web:</span>
-              <a href={`https://${dominio}`} style="color:#64ffda;text-decoration:underline;">{dominio}</a>
+              <span style="color:var(--color-wood-500);" aria-hidden="true">🌐</span>
+              <span style="color:var(--color-wood-300);">Sitio web:</span>
+              <a href={`https://${dominio}`} style="color:var(--color-wood-500);text-decoration:underline;">{dominio}</a>
             </div>
             <div class="flex items-center gap-3">
-              <span style="color:#64ffda;">📍</span>
-              <span style="color:rgba(165,243,252,0.8);">País:</span>
-              <span style="color:rgba(165,243,252,0.65);">{pais}</span>
+              <span style="color:var(--color-wood-500);" aria-hidden="true">📍</span>
+              <span style="color:var(--color-wood-300);">País:</span>
+              <span style="color:var(--color-wood-400);">{pais}</span>
             </div>
           </div>
         </div>
       </section>
 
       <!-- Última actualización -->
-      <div class="pt-6 border-t" style="border-color:rgba(21,94,117,0.3);">
-        <p class="text-xs font-mono text-center" style="color:rgba(100,255,218,0.3);">
+      <div class="pt-6" style="border-top:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+        <p class="text-xs text-center" style="color:var(--color-wood-400);">
           Última actualización: {fechaActualizacion} · {dominio}
         </p>
       </div>

@@ -1,31 +1,57 @@
 ---
 // src/components/AdSense.astro
 // =====================================================
-// Componente para anuncios de Google AdSense
-// Reemplaza data-ad-client y data-ad-slot con tus IDs reales
+// Componente reutilizable de anuncios AdSense.
+// Reserva siempre el mismo alto (evita CLS) tanto si el
+// anuncio está activo como si se muestra el placeholder.
+//
+// Para activar anuncios reales:
+//  1. Pon tu Publisher ID en ADSENSE_CLIENT.
+//  2. Pasa un data-ad-slot real en la prop `slot`.
+//  3. Cambia ENABLED a true.
+// Mientras ENABLED sea false, se muestra un espacio
+// reservado con el tamaño correcto, listo para producción.
 // =====================================================
 interface Props {
   slot: string;
-  format?: 'auto' | 'rectangle' | 'horizontal' | 'vertical';
+  format?: 'horizontal' | 'rectangle' | 'vertical' | 'in-article';
   className?: string;
 }
 
-const { slot, format = 'auto', className = '' } = Astro.props;
+const { slot, format = 'horizontal', className = '' } = Astro.props;
 
-// Tu Publisher ID de AdSense (reemplazar)
+const ENABLED = false;
 const ADSENSE_CLIENT = 'ca-pub-XXXXXXXXXXXXXXXXX';
+
+const sizes: Record<string, { minHeight: string; label: string }> = {
+  horizontal:  { minHeight: '90px',  label: '728 × 90' },
+  rectangle:   { minHeight: '250px', label: '300 × 250' },
+  vertical:    { minHeight: '600px', label: '160 × 600' },
+  'in-article':{ minHeight: '280px', label: 'Anuncio en contenido' },
+};
+const size = sizes[format];
 ---
 
-<div class={`adsense-container my-6 text-center ${className}`}>
-  <!-- AVISO: Reemplaza XXXXXXXXXXXXXXXXX con tu Publisher ID de AdSense -->
-  <!-- Una vez aprobado por Google, descomenta el script en BaseLayout.astro -->
-  <ins
-    class="adsbygoogle"
-    style="display:block"
-    data-ad-client={ADSENSE_CLIENT}
-    data-ad-slot={slot}
-    data-ad-format={format}
-    data-full-width-responsive="true"
-  ></ins>
-  <script>((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});</script>
+<div class={`ad-slot-wrapper my-6 ${className}`} role="complementary" aria-label="Espacio publicitario">
+  <p class="ad-slot__label text-center mb-2">Publicidad</p>
+
+  {ENABLED ? (
+    <div class="ad-slot" style={`min-height:${size.minHeight}`}>
+      <ins
+        class="adsbygoogle"
+        style="display:block; width:100%;"
+        data-ad-client={ADSENSE_CLIENT}
+        data-ad-slot={slot}
+        data-ad-format={format === 'in-article' ? 'fluid' : 'auto'}
+        data-full-width-responsive="true"
+      ></ins>
+      <script is:inline>
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  ) : (
+    <div class="ad-slot" style={`min-height:${size.minHeight}`}>
+      <span class="ad-slot__label">{size.label}</span>
+    </div>
+  )}
 </div>

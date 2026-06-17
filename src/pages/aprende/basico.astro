@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import LearningPath from '../../components/LearningPath.astro';
+import AdSense from '../../components/AdSense.astro';
+
+const temas = [
+  { titulo: 'Herramientas manuales básicas', texto: 'Serrucho, martillo, formón, escuadra, metro y nivel — el set mínimo para empezar sin gastar en máquinas.' },
+  { titulo: 'Herramientas eléctricas básicas', texto: 'Taladro/atornillador y sierra circular o caladora son las dos primeras compras que realmente aceleran tu trabajo.' },
+  { titulo: 'Seguridad en el taller', texto: 'Gafas, protección auditiva, mascarilla para polvo fino (MDF/melamina) y mantener el área de corte despejada.' },
+  { titulo: 'Medición y trazado', texto: 'La regla de oro: "mide dos veces, corta una". Usa escuadra para verificar 90° antes de cualquier corte.' },
+  { titulo: 'Tipos de cortes', texto: 'Corte recto, a inglete (ángulo) y a media madera — la base de casi cualquier unión simple.' },
+  { titulo: 'Unión de piezas', texto: 'Tornillo directo, tornillo + tarugo, y cola de madera — suficientes para el 90% de proyectos básicos.' },
+  { titulo: 'Lijado', texto: 'De grano grueso (80) a fino (220), siempre en la dirección de la veta en madera maciza.' },
+  { titulo: 'Pegado', texto: 'Cola blanca (PVA) para madera, cola de contacto para enchapes — cada pegamento tiene su uso correcto.' },
+  { titulo: 'Armado básico', texto: 'Verificar escuadra en cada unión antes de fijar definitivamente — un error aquí se replica en todo el mueble.' },
+  { titulo: 'Acabados iniciales', texto: 'Aceite, barniz o pintura según el material — revisa nuestras fichas de materiales para la recomendación específica.' },
+  { titulo: 'Errores comunes de principiantes', texto: 'No pretaladrar, cortar sin escuadra y saltarse el lijado entre manos de acabado son los tres más frecuentes.' },
+];
+---
+
+<BaseLayout
+  title="Carpintería Básica: Guía para Principiantes"
+  description="Herramientas, seguridad, medición, cortes, uniones, lijado y acabados — todo lo que necesitas para empezar en carpintería."
+  keywords="carpinteria basica para principiantes, herramientas basicas de carpinteria, como empezar en carpinteria"
+>
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Aprende', href: '/aprende' }, { label: 'Básico' }]} />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <span class="badge-category mb-4 inline-block" style="color:var(--color-olive-600); background:color-mix(in srgb, var(--color-olive-500) 12%, transparent);">🟢 Nivel Básico</span>
+    <h1 class="font-display text-4xl font-black leading-tight mb-5" style="color:var(--color-wood-100);">
+      Carpintería Básica: tu primer paso
+    </h1>
+    <p class="text-lg leading-relaxed mb-10" style="color:var(--color-wood-300);">
+      Antes de construir tu primer mueble, necesitas dominar lo esencial: herramientas, seguridad, medición y las
+      técnicas de unión y acabado más simples. Esta ruta cubre exactamente eso, en el orden en que conviene aprenderlo.
+    </p>
+
+    <AdSense slot="0000000031" format="horizontal" className="mb-10" />
+
+    <div class="space-y-4">
+      {temas.map((t, i) => (
+        <div class="rounded-xl p-5 flex gap-4" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style="background:color-mix(in srgb, var(--color-olive-500) 14%, transparent); color:var(--color-olive-600);">
+            {i + 1}
+          </div>
+          <div>
+            <h2 class="font-bold mb-1" style="color:var(--color-wood-200);">{t.titulo}</h2>
+            <p class="text-sm leading-relaxed" style="color:var(--color-wood-400);">{t.texto}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 rounded-2xl p-6" style="background:color-mix(in srgb, var(--color-wood-500) 8%, var(--color-bark-900)); border:1px solid color-mix(in srgb, var(--color-wood-500) 22%, transparent);">
+      <p class="font-bold mb-2" style="color:var(--color-wood-100);">Practica lo aprendido</p>
+      <p class="text-sm mb-4" style="color:var(--color-wood-400);">Estos dos proyectos están pensados exactamente para nivel básico:</p>
+      <div class="flex flex-wrap gap-3">
+        <a href="/proyectos/banco-de-madera-para-jardin" class="btn-secondary">Banco de madera para jardín →</a>
+        <a href="/proyectos/organizador-de-pared-con-triplay" class="btn-secondary">Organizador de pared →</a>
+      </div>
+    </div>
+
+    <LearningPath siguiente={{ label: 'Continuar a Nivel Intermedio', href: '/aprende/intermedio' }} />
+  </div>
+</BaseLayout>

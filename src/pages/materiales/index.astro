@@ -1,0 +1,49 @@
+---
+// src/pages/materiales/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CompareTable from '../../components/CompareTable.astro';
+import AdSense from '../../components/AdSense.astro';
+import { getCollection } from 'astro:content';
+
+const materiales = (await getCollection('materiales')).sort((a, b) => a.data.titulo.localeCompare(b.data.titulo));
+---
+
+<BaseLayout
+  title="Fundamentos de Materiales de Carpintería – Guía Completa"
+  description="Madera maciza, melamina, MDF, MDP, triplay, OSB, aglomerado, enchapados, canto PVC y herrajes: composición, usos, costos y cuándo usar cada uno."
+  keywords="materiales de carpinteria, tipos de tableros para muebles, mdf mdp melamina triplay osb"
+>
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Materiales' }]} />
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <p class="eyebrow mb-3">Fundamentos de materiales</p>
+    <h1 class="font-display text-4xl font-bold mb-5" style="color:var(--color-wood-100);">
+      Todo sobre los materiales de carpintería
+    </h1>
+    <p class="text-lg leading-relaxed mb-10" style="color:var(--color-wood-300); max-width:640px;">
+      Elegir bien el material es la decisión que más afecta el costo, la durabilidad y el resultado final de un mueble.
+      Esta es la base enciclopédica del sitio: qué es cada material, cuándo conviene usarlo y cuándo no.
+    </p>
+
+    <CompareTable materiales={materiales} />
+
+    <AdSense slot="0000000010" format="horizontal" className="mt-10" />
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-10">
+      {materiales.map(m => (
+        <a href={`/materiales/${m.id}`} class="card-manual block p-5">
+          <h2 class="font-display font-bold text-lg mb-2" style="color:var(--color-wood-100);">{m.data.titulo}</h2>
+          <p class="text-sm leading-relaxed line-clamp-3" style="color:var(--color-wood-400);">{m.data.resumen}</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 rounded-2xl p-8 text-center" style="background:color-mix(in srgb, var(--color-wood-500) 8%, var(--color-bark-900)); border:1px solid color-mix(in srgb, var(--color-wood-500) 22%, transparent);">
+      <p class="eyebrow mb-3">¿Trabajas mucho con melamina?</p>
+      <h2 class="font-display text-2xl font-bold mb-3" style="color:var(--color-wood-100);">Visita la guía especial de Melamina</h2>
+      <p class="text-sm mb-6" style="color:var(--color-wood-400);">Cortes sin astillar, canteado, herrajes, diseño y costeo — todo en un solo lugar.</p>
+      <a href="/melamina" class="btn-primary">Ver guía de melamina →</a>
+    </div>
+  </div>
+</BaseLayout>

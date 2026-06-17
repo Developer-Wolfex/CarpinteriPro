@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSense from '../../components/AdSense.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort((a, b) => new Date(b.data.fecha).getTime() - new Date(a.data.fecha).getTime());
+---
+
+<BaseLayout
+  title="Blog de Carpintería: Guías, Comparativas y Errores Comunes"
+  description="Artículos sobre materiales, cálculo de proyectos, errores comunes y consejos prácticos de carpintería y melamina."
+  keywords="blog de carpinteria, tips de carpinteria, errores comunes en muebles"
+>
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Blog' }]} />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <p class="eyebrow mb-3">Blog</p>
+    <h1 class="font-display text-4xl font-bold mb-10" style="color:var(--color-wood-100);">Artículos de Carpintería</h1>
+
+    <AdSense slot="0000000060" format="horizontal" className="mb-10" />
+
+    <div class="space-y-5">
+      {posts.map(post => (
+        <a href={`/blog/${post.id}`} class="card-manual block p-6">
+          <span class="badge-category mb-3 inline-block">{post.data.categoria}</span>
+          <h2 class="font-display font-bold text-xl mb-2" style="color:var(--color-wood-100);">{post.data.titulo}</h2>
+          <p class="text-sm leading-relaxed" style="color:var(--color-wood-400);">{post.data.descripcion}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

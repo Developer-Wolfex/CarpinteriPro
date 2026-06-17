@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import AdSense from '../components/AdSense.astro';
+---
+
+<BaseLayout
+  title="Recursos para Carpintería: Medidas, Checklists y Plantillas"
+  description="Tablas de medidas estándar de muebles, checklist de herramientas básicas y plantilla de cotización para proyectos de carpintería."
+  keywords="medidas estandar de muebles, checklist herramientas carpinteria, plantilla cotizacion muebles"
+>
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Recursos' }]} />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <p class="eyebrow mb-3">Referencia práctica</p>
+    <h1 class="font-display text-4xl font-bold mb-5" style="color:var(--color-wood-100);">Recursos para tu proyecto</h1>
+    <p class="text-lg leading-relaxed mb-10" style="color:var(--color-wood-300);">
+      Tablas de medidas estándar, checklists y una plantilla simple de cotización — todo lo que normalmente
+      tendrías que buscar en varios lugares distintos, reunido aquí.
+    </p>
+
+    <AdSense slot="0000000050" format="horizontal" className="mb-10" />
+
+    <h2 class="font-display text-2xl font-bold mb-5" style="color:var(--color-wood-100);">📏 Medidas estándar de muebles</h2>
+    <div class="overflow-x-auto rounded-2xl mb-10" style="border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+      <table class="w-full text-sm" style="background:var(--color-bark-900);">
+        <thead>
+          <tr style="background:color-mix(in srgb, var(--color-wood-500) 8%, transparent); border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+            <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Mueble</th>
+            <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Alto</th>
+            <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Profundidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            ['Mueble bajo de cocina', '85-90 cm', '55-60 cm'],
+            ['Mueble alto de cocina', '70-90 cm', '30-35 cm'],
+            ['Closet / ropero', '200-240 cm', '55-60 cm'],
+            ['Escritorio', '73-75 cm', '55-70 cm'],
+            ['Mesa de comedor', '75 cm', '90 cm (ancho típico)'],
+            ['Repisa flotante', '—', '20-30 cm'],
+            ['Mesa de centro', '40-45 cm', '60-90 cm (largo)'],
+          ].map((row, i) => (
+            <tr style={`border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 40%, transparent); background:${i % 2 === 0 ? 'transparent' : 'color-mix(in srgb, var(--color-wood-500) 3%, transparent)'}`}>
+              <td class="p-4 font-bold" style="color:var(--color-wood-200);">{row[0]}</td>
+              <td class="p-4" style="color:var(--color-wood-400);">{row[1]}</td>
+              <td class="p-4" style="color:var(--color-wood-400);">{row[2]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="font-display text-2xl font-bold mb-5" style="color:var(--color-wood-100);">🧰 Checklist de herramientas básicas</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+      {[
+        'Metro / cinta métrica', 'Escuadra', 'Nivel', 'Lápiz de carpintero',
+        'Serrucho o sierra circular', 'Taladro/atornillador', 'Lijadora o lija manual', 'Martillo',
+        'Formón', 'Prensas de sujeción', 'Gafas y protección auditiva', 'Mascarilla para polvo fino',
+      ].map(item => (
+        <div class="flex items-center gap-3 p-3 rounded-lg" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 50%, transparent);">
+          <span style="color:var(--color-wood-500);" aria-hidden="true">☐</span>
+          <span class="text-sm" style="color:var(--color-wood-300);">{item}</span>
+        </div>
+      ))}
+    </div>
+
+    <AdSense slot="0000000051" format="rectangle" className="mb-10" />
+
+    <h2 class="font-display text-2xl font-bold mb-5" style="color:var(--color-wood-100);">🧾 Plantilla simple de cotización</h2>
+    <p class="text-sm leading-relaxed mb-5" style="color:var(--color-wood-400);">
+      Usa esta estructura como base para cotizar un mueble a un cliente — copia y adapta los rubros según tu proyecto.
+    </p>
+    <div class="overflow-x-auto rounded-2xl mb-10" style="border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+      <table class="w-full text-sm" style="background:var(--color-bark-900);">
+        <thead>
+          <tr style="background:color-mix(in srgb, var(--color-wood-500) 8%, transparent); border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+            <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Rubro</th>
+            <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Detalle</th>
+            <th class="text-left p-4 font-bold" style="color:var(--color-wood-600);">Costo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            ['Material principal', 'Planchas, espesores y cantidad'],
+            ['Canto y selladores', 'Metros lineales de canto PVC'],
+            ['Herrajes', 'Bisagras, correderas, tiradores (por unidad)'],
+            ['Tornillería y accesorios', 'Confirmat, tarugos, anclajes'],
+            ['Mano de obra', 'Corte, canteado, armado'],
+            ['Instalación', 'Si aplica, transporte y montaje en sitio'],
+            ['Margen de desperdicio (10-15%)', 'Sobre el total de material'],
+            ['Margen de utilidad', 'Tu ganancia sobre el costo total'],
+          ].map(([rubro, detalle], i) => (
+            <tr style={`border-bottom:1px solid color-mix(in srgb, var(--color-wood-800) 40%, transparent); background:${i % 2 === 0 ? 'transparent' : 'color-mix(in srgb, var(--color-wood-500) 3%, transparent)'}`}>
+              <td class="p-4 font-bold" style="color:var(--color-wood-200);">{rubro}</td>
+              <td class="p-4" style="color:var(--color-wood-400);">{detalle}</td>
+              <td class="p-4" style="color:var(--color-wood-400);">_____</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rounded-2xl p-6" style="background:color-mix(in srgb, var(--color-wood-500) 8%, var(--color-bark-900)); border:1px solid color-mix(in srgb, var(--color-wood-500) 22%, transparent);">
+      <p class="font-bold mb-2" style="color:var(--color-wood-100);">¿Necesitas calcular un proyecto específico?</p>
+      <p class="text-sm mb-4" style="color:var(--color-wood-400);">Revisa el ejemplo numérico completo en nuestra guía de cálculo de material.</p>
+      <a href="/blog/como-calcular-material-para-un-closet" class="btn-primary">Ver guía de cálculo →</a>
+    </div>
+  </div>
+</BaseLayout>

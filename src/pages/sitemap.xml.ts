@@ -1,6 +1,7 @@
 
 // src/pages/sitemap.xml.ts
 import { MANUALES } from '../data/manuales';
+import { getCollection } from 'astro:content';
 
 interface SitemapPage {
   url: string;
@@ -22,8 +23,18 @@ export async function GET() {
   const base = 'https://carpinteriapro.com';
 
   const staticPages: SitemapPage[] = [
-    { url: '/',         priority: '1.0', changefreq: 'daily',  lastmod: today() },
-    { url: '/manuales', priority: '0.9', changefreq: 'weekly', lastmod: today() },
+    { url: '/',                   priority: '1.0', changefreq: 'daily',  lastmod: today() },
+    { url: '/aprende',            priority: '0.9', changefreq: 'monthly', lastmod: today() },
+    { url: '/aprende/basico',     priority: '0.8', changefreq: 'monthly', lastmod: today() },
+    { url: '/aprende/intermedio', priority: '0.8', changefreq: 'monthly', lastmod: today() },
+    { url: '/aprende/avanzado',   priority: '0.8', changefreq: 'monthly', lastmod: today() },
+    { url: '/materiales',         priority: '0.9', changefreq: 'weekly', lastmod: today() },
+    { url: '/melamina',           priority: '0.9', changefreq: 'monthly', lastmod: today() },
+    { url: '/proyectos',          priority: '0.9', changefreq: 'weekly', lastmod: today() },
+    { url: '/manuales',           priority: '0.9', changefreq: 'weekly', lastmod: today() },
+    { url: '/blog',                priority: '0.8', changefreq: 'weekly', lastmod: today() },
+    { url: '/glosario',           priority: '0.7', changefreq: 'monthly', lastmod: today() },
+    { url: '/recursos',           priority: '0.7', changefreq: 'monthly', lastmod: today() },
   ];
 
   const manualPages: SitemapPage[] = MANUALES.map(m => ({
@@ -33,7 +44,31 @@ export async function GET() {
     lastmod: safeDate(m.fecha),
   }));
 
-  const pages = [...staticPages, ...manualPages];
+  const materiales = await getCollection('materiales');
+  const materialPages: SitemapPage[] = materiales.map(m => ({
+    url: `/materiales/${m.id}`,
+    priority: '0.8',
+    changefreq: 'monthly',
+    lastmod: safeDate(m.data.fecha),
+  }));
+
+  const proyectos = await getCollection('proyectos');
+  const proyectoPages: SitemapPage[] = proyectos.map(p => ({
+    url: `/proyectos/${p.id}`,
+    priority: p.data.destacado ? '0.9' : '0.7',
+    changefreq: 'monthly',
+    lastmod: safeDate(p.data.fecha),
+  }));
+
+  const blogPosts = await getCollection('blog');
+  const blogPages: SitemapPage[] = blogPosts.map(post => ({
+    url: `/blog/${post.id}`,
+    priority: '0.7',
+    changefreq: 'monthly',
+    lastmod: safeDate(post.data.fecha),
+  }));
+
+  const pages = [...staticPages, ...manualPages, ...materialPages, ...proyectoPages, ...blogPages];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

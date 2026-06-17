@@ -1,0 +1,17 @@
+---
+// src/components/LearningPath.astro — navegación anterior/siguiente entre niveles de la ruta de aprendizaje
+interface Props {
+  anterior?: { label: string; href: string };
+  siguiente?: { label: string; href: string };
+}
+const { anterior, siguiente } = Astro.props;
+---
+
+<nav class="flex flex-col sm:flex-row gap-4 mt-12" aria-label="Navegación de la ruta de aprendizaje">
+  {anterior ? (
+    <a href={anterior.href} class="btn-secondary flex-1 justify-center">← {anterior.label}</a>
+  ) : <div class="flex-1"></div>}
+  {siguiente && (
+    <a href={siguiente.href} class="btn-primary flex-1 justify-center">{siguiente.label} →</a>
+  )}
+</nav>

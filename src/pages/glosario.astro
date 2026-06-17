@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import AdSense from '../components/AdSense.astro';
+import { GLOSARIO } from '../data/glosario';
+---
+
+<BaseLayout
+  title="Glosario de Carpintería: Términos Técnicos Explicados"
+  description="Diccionario simple de términos de carpintería, melamina, herrajes y acabados — explicado en lenguaje claro."
+  keywords="glosario de carpinteria, terminos de carpinteria, diccionario de melamina y herrajes"
+>
+  <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Glosario' }]} />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <p class="eyebrow mb-3">Referencia rápida</p>
+    <h1 class="font-display text-4xl font-bold mb-5" style="color:var(--color-wood-100);">Glosario de Carpintería</h1>
+    <p class="text-lg leading-relaxed mb-10" style="color:var(--color-wood-300);">
+      Términos técnicos de carpintería, melamina, herrajes y acabados, explicados en lenguaje simple y directo.
+    </p>
+
+    <nav class="flex flex-wrap gap-2 mb-10" aria-label="Categorías del glosario">
+      {GLOSARIO.map(cat => (
+        <a href={`#${cat.categoria.toLowerCase().replace(/\s+/g, '-')}`} class="btn-secondary !py-2 !px-4 !text-xs">
+          {cat.emoji} {cat.categoria}
+        </a>
+      ))}
+    </nav>
+
+    <AdSense slot="0000000040" format="horizontal" className="mb-10" />
+
+    {GLOSARIO.map((cat, i) => (
+      <>
+        <section id={cat.categoria.toLowerCase().replace(/\s+/g, '-')} class="mb-12">
+          <h2 class="font-display text-2xl font-bold mb-5 flex items-center gap-2" style="color:var(--color-wood-100);">
+            <span aria-hidden="true">{cat.emoji}</span> {cat.categoria}
+          </h2>
+          <dl class="space-y-3">
+            {cat.terminos.map(t => (
+              <div class="rounded-xl p-4" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent);">
+                <dt class="font-bold text-sm mb-1" style="color:var(--color-wood-600);">{t.termino}</dt>
+                <dd class="text-sm leading-relaxed" style="color:var(--color-wood-400);">{t.definicion}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+        {i === 1 && <AdSense slot="0000000041" format="rectangle" className="mb-12" />}
+      </>
+    ))}
+  </div>
+</BaseLayout>

@@ -2,8 +2,8 @@
 // src/components/Sidebar.astro
 import { CATEGORIAS, MANUALES } from '../data/manuales';
 import type { Categoria } from '../data/manuales';
+import AdSense from './AdSense.astro';
 
-// Ya NO necesitamos la prop categoriaActiva
 const conteo = Object.fromEntries(
   Object.keys(CATEGORIAS).map(cat => [
     cat,
@@ -15,21 +15,20 @@ const conteo = Object.fromEntries(
 <aside class="space-y-6">
 
   <!-- Filtro por categoría -->
-  <div class="bg-bark-900 rounded-xl border border-wood-800/30 p-5">
-    <h2 class="font-display font-bold text-wood-200 text-lg mb-4 flex items-center gap-2">
-      <span>📂</span> Manuales por Tipo
+  <div class="rounded-2xl p-5" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent); box-shadow:var(--shadow-soft);">
+    <h2 class="font-display font-bold text-lg mb-4 flex items-center gap-2" style="color:var(--color-wood-200);">
+      <span aria-hidden="true">📂</span> Manuales por Tipo
     </h2>
 
-    <nav class="space-y-1">
-      <!-- "Todos" — sin data-cat -->
+    <nav class="space-y-1" aria-label="Filtrar manuales por categoría">
       <a
         href="/manuales"
         data-cat=""
         class="sidebar-link sidebar-filter"
       >
-        <span>🗂️</span>
+        <span aria-hidden="true">🗂️</span>
         <span class="flex-1">Todos los manuales</span>
-        <span class="text-xs bg-wood-800/50 px-2 py-0.5 rounded-full text-wood-400">
+        <span class="text-xs px-2 py-0.5 rounded-full" style="background:var(--color-bark-800); color:var(--color-wood-400);">
           {MANUALES.length}
         </span>
       </a>
@@ -40,9 +39,9 @@ const conteo = Object.fromEntries(
           data-cat={key}
           class="sidebar-link sidebar-filter"
         >
-          <span>{cat.emoji}</span>
+          <span aria-hidden="true">{cat.emoji}</span>
           <span class="flex-1">{cat.label}</span>
-          <span class="text-xs bg-wood-800/50 px-2 py-0.5 rounded-full text-wood-400">
+          <span class="text-xs px-2 py-0.5 rounded-full" style="background:var(--color-bark-800); color:var(--color-wood-400);">
             {conteo[key]}
           </span>
         </a>
@@ -51,20 +50,20 @@ const conteo = Object.fromEntries(
   </div>
 
   <!-- Niveles -->
-  <div class="bg-bark-900 rounded-xl border border-wood-800/30 p-5">
-    <h2 class="font-display font-bold text-wood-200 text-lg mb-4 flex items-center gap-2">
-      <span>📊</span> Por Nivel
+  <div class="rounded-2xl p-5" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent); box-shadow:var(--shadow-soft);">
+    <h2 class="font-display font-bold text-lg mb-4 flex items-center gap-2" style="color:var(--color-wood-200);">
+      <span aria-hidden="true">📊</span> Por Nivel
     </h2>
     <div class="space-y-2">
       {[
-        { nivel: 'Básico',     color: 'bg-green-500',  porcentaje: 40 },
-        { nivel: 'Intermedio', color: 'bg-yellow-500', porcentaje: 45 },
-        { nivel: 'Avanzado',   color: 'bg-red-500',    porcentaje: 15 },
+        { nivel: 'Básico',     color: 'var(--color-olive-500)', porcentaje: 40 },
+        { nivel: 'Intermedio', color: 'var(--color-wood-500)',  porcentaje: 45 },
+        { nivel: 'Avanzado',   color: 'var(--color-wood-700)',  porcentaje: 15 },
       ].map(item => (
         <div class="flex items-center gap-3">
-          <span class="text-wood-400 text-xs w-20">{item.nivel}</span>
-          <div class="flex-1 bg-bark-800 rounded-full h-1.5">
-            <div class={`${item.color} h-1.5 rounded-full`} style={`width: ${item.porcentaje}%`}></div>
+          <span class="text-xs w-20" style="color:var(--color-wood-400);">{item.nivel}</span>
+          <div class="flex-1 rounded-full h-1.5" style="background:var(--color-bark-800);">
+            <div class="h-1.5 rounded-full" style={`width:${item.porcentaje}%; background:${item.color};`}></div>
           </div>
         </div>
       ))}
@@ -72,29 +71,24 @@ const conteo = Object.fromEntries(
   </div>
 
   <!-- AdSense sidebar -->
-  <div class="bg-bark-900 rounded-xl border border-wood-800/20 p-4 text-center">
-    <p class="text-wood-600 text-xs mb-2">PUBLICIDAD</p>
-    <div class="bg-bark-800 rounded-lg h-[250px] flex items-center justify-center">
-      <p class="text-wood-600 text-xs">Anuncio 300×250</p>
-    </div>
-  </div>
+  <AdSense slot="0000000001" format="rectangle" />
 
   <!-- Manuales recientes -->
-  <div class="bg-bark-900 rounded-xl border border-wood-800/30 p-5">
-    <h2 class="font-display font-bold text-wood-200 text-lg mb-4 flex items-center gap-2">
-      <span>🔥</span> Más recientes
+  <div class="rounded-2xl p-5" style="background:var(--color-bark-900); border:1px solid color-mix(in srgb, var(--color-wood-800) 60%, transparent); box-shadow:var(--shadow-soft);">
+    <h2 class="font-display font-bold text-lg mb-4 flex items-center gap-2" style="color:var(--color-wood-200);">
+      <span aria-hidden="true">🔥</span> Más recientes
     </h2>
     <div class="space-y-3">
       {MANUALES.slice(0, 4).map(m => (
         <a href={`/manuales/${m.slug}`} class="flex gap-3 group">
-          <div class="w-12 h-12 bg-bark-800 rounded-lg flex items-center justify-center text-xl flex-shrink-0">
+          <div class="w-12 h-12 rounded-lg flex items-center justify-center text-xl flex-shrink-0" style="background:var(--color-bark-800);">
             {CATEGORIAS[m.categoria].emoji}
           </div>
           <div>
-            <p class="text-wood-300 text-xs font-bold leading-snug group-hover:text-wood-100 transition-colors line-clamp-2">
+            <p class="text-xs font-bold leading-snug line-clamp-2 transition-colors" style="color:var(--color-wood-200);">
               {m.titulo}
             </p>
-            <p class="text-wood-600 text-xs mt-0.5">{m.nivel}</p>
+            <p class="text-xs mt-0.5" style="color:var(--color-wood-400);">{m.nivel}</p>
           </div>
         </a>
       ))}
@@ -112,23 +106,17 @@ const conteo = Object.fromEntries(
       const linkCat = link.getAttribute('data-cat') || '';
 
       if (linkCat === cat) {
-        // Activar este link
         link.classList.add('active');
       } else {
-        // Desactivar los demás
         link.classList.remove('active');
       }
     });
   }
 
-  // Al cargar la página
   activarSidebarLink();
 
-  // Al usar botones atrás/adelante del browser
   window.addEventListener('popstate', activarSidebarLink);
 
-  // ✅ Escucha cuando el index.astro cambia la URL con history.pushState
-  // (necesario porque pushState no dispara 'popstate')
   const originalPushState = history.pushState.bind(history);
   history.pushState = function(...args) {
     originalPushState(...args);
